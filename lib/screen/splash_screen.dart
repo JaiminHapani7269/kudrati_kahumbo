@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
+import 'package:kudrati_kahumbo/utils/dimensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helper/helper.dart';
@@ -43,8 +44,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
+        height: Dimensions.screenHeight,
+        width: Dimensions.screenWidth,
         color: AppColors.mainPurple,
         child: Center(
           child: Padding(
