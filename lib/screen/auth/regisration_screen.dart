@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:kudrati_kahumbo/utils/dimensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../helper/helper.dart';
@@ -36,7 +37,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            padding: EdgeInsets.symmetric(
+                vertical: Dimensions.h10, horizontal: Dimensions.w20),
             child: Form(
               key: _formKey,
               child: SingleChildScrollView(
@@ -46,28 +48,29 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     Image.asset(
                       "assets/images/login1.png",
                     ),
-                    const Text(
+                    Text(
                       "Phone Verification",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: Dimensions.h24),
                     ),
-                    const SizedBox(height: 15),
-                    const Text(
+                    SizedBox(height: Dimensions.h15),
+                    Text(
                       "We need to register your phone before getting started!",
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: Dimensions.h15),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 30),
+                    SizedBox(height: Dimensions.h30),
                     Container(
-                      height: 55,
+                      height: Dimensions.h55,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         border:
                             Border.all(width: 1, color: AppColors.mainPurple),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(Dimensions.r12),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(10),
+                        padding: EdgeInsets.all(Dimensions.w10),
                         child: TextFormField(
                           controller: userName,
                           keyboardType: TextInputType.name,
@@ -86,19 +89,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    SizedBox(height: Dimensions.h10),
                     Container(
-                      height: 55,
+                      height: Dimensions.h55,
                       decoration: BoxDecoration(
                         border:
                             Border.all(width: 1, color: AppColors.mainPurple),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(Dimensions.r12),
                       ),
                       child: Row(
                         children: [
-                          const SizedBox(width: 10),
+                          SizedBox(width: Dimensions.w10),
                           SizedBox(
-                            width: 40,
+                            width: Dimensions.w40,
                             child: TextFormField(
                               controller: countryCode,
                               textInputAction: TextInputAction.next,
@@ -108,14 +111,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   countryCode.text = newValue!,
                             ),
                           ),
-                          const Text(
+                          Text(
                             "|",
                             style: TextStyle(
-                                fontSize: 35,
+                                fontSize: Dimensions.h35,
                                 color: AppColors.mainPurple,
                                 fontWeight: FontWeight.w300),
                           ),
-                          const SizedBox(width: 10),
+                          SizedBox(width: Dimensions.h10),
                           Expanded(
                             child: TextFormField(
                               controller: mobile,
@@ -138,20 +141,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 15),
+                    SizedBox(height: Dimensions.h15),
                     SizedBox(
-                      height: 45,
+                      height: Dimensions.h45,
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: signInWithPhone,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.mainPurple,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
+                              borderRadius:
+                                  BorderRadius.circular(Dimensions.r12)),
                         ),
-                        child: const Text(
+                        child: Text(
                           "Send The Code",
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: Dimensions.h15),
                         ),
                       ),
                     ),

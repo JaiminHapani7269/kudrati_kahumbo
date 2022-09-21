@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kudrati_kahumbo/utils/dimensions.dart';
 
 import '../utils/app_colors.dart';
 
@@ -12,7 +13,6 @@ class CartDrawer extends StatefulWidget {
 class _CartDrawerState extends State<CartDrawer> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Drawer(
       elevation: 20.0,
       backgroundColor: Colors.transparent,
@@ -22,20 +22,21 @@ class _CartDrawerState extends State<CartDrawer> {
             Container(
               height: double.infinity,
               width: double.infinity,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: AppColors.mainPurple,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(50.0),
-                  bottomLeft: Radius.circular(50.0),
+                  topLeft: Radius.circular(Dimensions.r50),
+                  bottomLeft: Radius.circular(Dimensions.r50),
                 ),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
+                children: [
                   Text(
                     "Cart Page",
-                    style: TextStyle(color: Colors.white, fontSize: 36),
+                    style: TextStyle(
+                        color: Colors.white, fontSize: Dimensions.h35),
                   ),
                 ],
               ),

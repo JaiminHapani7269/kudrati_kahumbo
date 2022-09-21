@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kudrati_kahumbo/screen/splash_screen.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
+import 'package:kudrati_kahumbo/utils/dimensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -18,7 +19,6 @@ class CustomDrawer extends StatefulWidget {
 class _CustomDrawerState extends State<CustomDrawer> {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Drawer(
       elevation: 20.0,
       backgroundColor: Colors.transparent,
@@ -27,11 +27,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
           children: [
             Container(
               height: double.infinity,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: AppColors.mainPurple,
                 borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(50.0),
-                  bottomRight: Radius.circular(50.0),
+                  topRight: Radius.circular(Dimensions.w50),
+                  bottomRight: Radius.circular(Dimensions.r50),
                 ),
               ),
               child: ListView(
@@ -41,10 +41,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     padding: EdgeInsets.zero,
                     margin: EdgeInsets.zero,
                     child: UserAccountsDrawerHeader(
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: AppColors.mainPurple,
                         borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(50.0),
+                          topRight: Radius.circular(Dimensions.r50),
                         ),
                       ),
                       accountName: Text("${widget.userName}"),
@@ -58,18 +58,18 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ListTile(
                     leading:
                         const Icon(Icons.shopping_bag, color: Colors.white),
-                    title: const Text("My Order",
+                    title: Text("My Order",
                         style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: Dimensions.h20,
                         )),
                     onTap: () {},
                     textColor: Colors.white,
                   ),
                   ListTile(
                     leading: const Icon(Icons.favorite, color: Colors.white),
-                    title: const Text("My Wishlist",
+                    title: Text("My Wishlist",
                         style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: Dimensions.h20,
                         )),
                     onTap: () {},
                     textColor: Colors.white,
@@ -77,9 +77,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ListTile(
                     leading: const Icon(CupertinoIcons.list_bullet,
                         color: Colors.white),
-                    title: const Text("Menu",
+                    title: Text("Menu",
                         style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: Dimensions.h20,
                         )),
                     onTap: () {},
                     textColor: Colors.white,
@@ -87,9 +87,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ListTile(
                     leading: const Icon(CupertinoIcons.arrow_branch,
                         color: Colors.white),
-                    title: const Text("Branches",
+                    title: Text("Branches",
                         style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: Dimensions.h20,
                         )),
                     onTap: () {},
                     textColor: Colors.white,
@@ -97,9 +97,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ListTile(
                     leading:
                         const Icon(Icons.shop_2_outlined, color: Colors.white),
-                    title: const Text("Frenchise",
+                    title: Text("Frenchise",
                         style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: Dimensions.h20,
                         )),
                     onTap: () {},
                     textColor: Colors.white,
@@ -107,9 +107,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ListTile(
                     leading:
                         const Icon(Icons.contact_page, color: Colors.white),
-                    title: const Text("Contact Us",
+                    title: Text("Contact Us",
                         style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: Dimensions.h20,
                         )),
                     onTap: () {},
                     textColor: Colors.white,
@@ -117,9 +117,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ListTile(
                     leading:
                         const Icon(Icons.info_outline, color: Colors.white),
-                    title: const Text("About Us",
+                    title: Text("About Us",
                         style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: Dimensions.h20,
                         )),
                     onTap: () {},
                     textColor: Colors.white,
@@ -127,9 +127,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ListTile(
                     leading: const Icon(Icons.exit_to_app_rounded,
                         color: Colors.white),
-                    title: const Text("Logout",
+                    title: Text("Logout",
                         style: TextStyle(
-                          fontSize: 20.0,
+                          fontSize: Dimensions.h20,
                         )),
                     onTap: () async {
                       FirebaseAuth.instance.signOut().whenComplete(() async {

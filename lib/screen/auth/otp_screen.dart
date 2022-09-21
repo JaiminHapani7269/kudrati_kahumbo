@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kudrati_kahumbo/model/user_model.dart';
 import 'package:kudrati_kahumbo/screen/auth/regisration_screen.dart';
+import 'package:kudrati_kahumbo/utils/dimensions.dart';
 import 'package:pinput/pinput.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -65,7 +66,10 @@ class _OTPScreenState extends State<OTPScreen> {
       body: Form(
         key: _formKey,
         child: Container(
-          margin: const EdgeInsets.only(left: 25, right: 25, bottom: 15),
+          margin: EdgeInsets.only(
+              left: Dimensions.w25,
+              right: Dimensions.w25,
+              bottom: Dimensions.h25),
           alignment: Alignment.center,
           child: SingleChildScrollView(
             child: Column(
@@ -74,25 +78,26 @@ class _OTPScreenState extends State<OTPScreen> {
                 Image.asset(
                   "assets/images/otp.png",
                 ),
-                const SizedBox(height: 15),
-                const Text(
+                SizedBox(height: Dimensions.h15),
+                Text(
                   "Phone Verification",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: Dimensions.h24),
                 ),
-                const SizedBox(height: 10),
-                const Text(
+                SizedBox(height: Dimensions.h10),
+                Text(
                   "We need to register your phone before getting started !",
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: Dimensions.h15),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: Dimensions.h10),
                 Text(
                   "Your No is ${RegistrationScreen.mobile.substring(0, 3)}*****${RegistrationScreen.mobile.substring(8)} ?",
-                  style: const TextStyle(
-                      fontSize: 18, color: AppColors.mainPurple),
+                  style: TextStyle(
+                      fontSize: Dimensions.h18, color: AppColors.mainPurple),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 15),
+                SizedBox(height: Dimensions.h15),
                 Pinput(
                   length: 6,
                   defaultPinTheme: defaultPinTheme,
@@ -112,9 +117,9 @@ class _OTPScreenState extends State<OTPScreen> {
                   pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
                   showCursor: true,
                 ),
-                const SizedBox(height: 15),
+                SizedBox(height: Dimensions.h15),
                 SizedBox(
-                  height: 45,
+                  height: Dimensions.h45,
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () async {
@@ -141,15 +146,15 @@ class _OTPScreenState extends State<OTPScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.mainPurple,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(Dimensions.h10)),
                     ),
-                    child: const Text(
+                    child: Text(
                       "Verify Phone Number",
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: Dimensions.h15),
                     ),
                   ),
                 ),
-                const SizedBox(height: 5),
+                SizedBox(height: Dimensions.h5),
                 Container(
                   alignment: Alignment.topLeft,
                   child: TextButton(

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
+import 'package:kudrati_kahumbo/utils/dimensions.dart';
 import 'package:kudrati_kahumbo/widgets/cart.dart';
 import 'package:kudrati_kahumbo/widgets/drawer.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -45,7 +46,7 @@ class _HomePageState extends State<HomePage> {
       "Fruit Juices",
       "Mojito's World",
       "Fruit Layer",
-      "Unique Mocktails",
+      "Unique Mocktail",
       "Fruit Dish"
     ];
     return Scaffold(
@@ -78,7 +79,7 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
+            SizedBox(height: Dimensions.h10),
             CarouselSlider(
                 items: [
                   Image.asset("assets/slider/1.jpg"),
@@ -108,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                   Image.asset("assets/slider/26.jpg"),
                 ],
                 options: CarouselOptions(
-                  height: 200,
+                  height: Dimensions.h200,
                   viewportFraction: 0.5,
                   aspectRatio: 18 / 6,
                   initialPage: 0,
@@ -124,7 +125,7 @@ class _HomePageState extends State<HomePage> {
             // const SizedBox(height: 10),
             Container(
               alignment: Alignment.bottomLeft,
-              padding: const EdgeInsets.symmetric(horizontal: 12),
+              padding: EdgeInsets.symmetric(horizontal: Dimensions.w12),
               child: const Text(
                 "Category",
                 style: TextStyle(
@@ -134,37 +135,37 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Container(
-              height: 110,
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+              height: Dimensions.h120,
+              padding: EdgeInsets.symmetric(
+                  horizontal: Dimensions.w10, vertical: Dimensions.h5),
               child: ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemCount: cat.length,
                   itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 6, vertical: 5),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Dimensions.w5, vertical: Dimensions.h5),
                         child: Container(
-                          width: 80,
-                          height: 80,
-                          padding: const EdgeInsets.all(12),
+                          width: Dimensions.w80,
+                          height: Dimensions.h80,
+                          padding: EdgeInsets.all(Dimensions.w10),
                           alignment: Alignment.center,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             color: AppColors.mainPurple,
                             borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(26),
-                              bottomLeft: Radius.circular(26),
+                              topRight: Radius.circular(Dimensions.r24),
+                              bottomLeft: Radius.circular(Dimensions.r24),
                             ),
                             //BoxShadow
                           ),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Image.asset(
                                 "assets/icons/shot.png",
-                                height: 30,
+                                height: Dimensions.h30,
                               ),
-                              const SizedBox(height: 3),
                               Text(
                                 cat[index],
                                 style: const TextStyle(color: Colors.white),
@@ -174,71 +175,71 @@ class _HomePageState extends State<HomePage> {
                         ),
                       )),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: Dimensions.h10),
             Container(
               alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.only(left: 12),
-              child: const Text(
+              padding: EdgeInsets.only(left: Dimensions.w12),
+              child: Text(
                 "Popular Product",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: AppColors.mainPurple,
-                    fontSize: 24),
+                    fontSize: Dimensions.h24),
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: Dimensions.h10),
             Padding(
-              padding: const EdgeInsets.only(left: 15, right: 15),
-              child: Container(
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    // scrollDirection: Axis.vertical,
-                    itemCount: 12,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 5),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 233, 192, 223),
-                            borderRadius: BorderRadius.circular(12),
+              padding:
+                  EdgeInsets.only(left: Dimensions.w15, right: Dimensions.w15),
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: 12,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                          vertical: Dimensions.h5, horizontal: Dimensions.w5),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 233, 192, 223),
+                          borderRadius: BorderRadius.circular(Dimensions.r12),
+                        ),
+                        child: ListTile(
+                          leading: Container(
+                            height: Dimensions.h50,
+                            width: Dimensions.w50,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(Dimensions.r12),
+                                image: const DecorationImage(
+                                  fit: BoxFit.fitHeight,
+                                  image: AssetImage("assets/images/jamun.jpg"),
+                                )),
                           ),
-                          child: ListTile(
-                            leading: Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  image: const DecorationImage(
-                                    fit: BoxFit.fitHeight,
-                                    image:
-                                        AssetImage("assets/images/jamun.jpg"),
-                                  )),
-                            ),
-                            title: const Text(
-                              "Jamun Shot",
-                              style: TextStyle(
-                                  color: AppColors.mainPurple, fontSize: 26),
-                            ),
-                            subtitle: const Text("Rs.120"),
-                            trailing: Container(
-                              height: 50,
-                              width: 80,
-                              decoration: BoxDecoration(
+                          title: Text(
+                            "Jamun Shot",
+                            style: TextStyle(
                                 color: AppColors.mainPurple,
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              child: const Icon(
-                                Icons.add_shopping_cart_outlined,
-                                color: Colors.white,
-                              ),
+                                fontSize: Dimensions.h24),
+                          ),
+                          subtitle: const Text("Rs.120"),
+                          trailing: Container(
+                            height: Dimensions.h50,
+                            width: Dimensions.w80,
+                            decoration: BoxDecoration(
+                              color: AppColors.mainPurple,
+                              borderRadius:
+                                  BorderRadius.circular(Dimensions.r24),
+                            ),
+                            child: const Icon(
+                              Icons.add_shopping_cart_outlined,
+                              color: Colors.white,
                             ),
                           ),
                         ),
-                      );
-                    }),
-              ),
+                      ),
+                    );
+                  }),
             ),
           ],
         ),
