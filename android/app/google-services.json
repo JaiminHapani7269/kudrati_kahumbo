@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1095541565902",
+    "project_id": "kudrati-kahumbo",
+    "storage_bucket": "kudrati-kahumbo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095541565902:android:7863e26339c3125751a39f",
+        "android_client_info": {
+          "package_name": "com.example.kudrati_kahumbo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1095541565902-o521e2p7fslo1gfutj140vt456363v7g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClAl7G2JIMkk0m3ClPn5Y4tr2BJJSjo1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1095541565902-o521e2p7fslo1gfutj140vt456363v7g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
