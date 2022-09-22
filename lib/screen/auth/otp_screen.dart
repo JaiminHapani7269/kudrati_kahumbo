@@ -10,6 +10,7 @@ import 'package:kudrati_kahumbo/utils/dimensions.dart';
 import 'package:pinput/pinput.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../helper/helper_function.dart';
 import '../../utils/app_colors.dart';
 
 class OTPScreen extends StatefulWidget {
@@ -133,7 +134,7 @@ class _OTPScreenState extends State<OTPScreen> {
                               .signInWithCredential(credential)
                               .then((value) async {
                             postDetailsToFirestore();
-
+                            await HelperFunction.saveLogingData(true);
                             Navigator.pushNamedAndRemoveUntil(
                                 context, "home", (route) => false);
                           });

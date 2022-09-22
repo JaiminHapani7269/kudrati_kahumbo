@@ -3,10 +3,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:kudrati_kahumbo/helper/helper_function.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../helper/helper.dart';
 import '../../utils/app_colors.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -177,14 +177,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         verificationFailed: (FirebaseAuthException e) {
           Fluttertoast.showToast(msg: "Auth Failed!");
         },
-        codeSent: (String verificationId, int? resendToken) {
-          Navigator.pushReplacementNamed(context, "otp").whenComplete(() async {
-            await Helper.saveUserLoggedInStatus(true);
-
-            // final SharedPreferences sharedPreferences =
-            //     await SharedPreferences.getInstance();
-            // sharedPreferences.setString('mobile', mobile.text);
-          });
+        codeSent: (String verificationId, int? resendToken) async {
+          Navigator.pushReplacementNamed(context, "otp");
           Fluttertoast.showToast(msg: "OTP Sent :)");
           RegistrationScreen.verify = verificationId;
           RegistrationScreen.username = userName.text;

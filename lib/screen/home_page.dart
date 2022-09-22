@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
 import 'package:kudrati_kahumbo/widgets/cart.dart';
@@ -151,10 +152,12 @@ class _HomePageState extends State<HomePage> {
                           padding: EdgeInsets.all(Dimensions.w10),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color: AppColors.mainPurple,
+                            color: const Color.fromARGB(255, 233, 192, 223),
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(Dimensions.r24),
                               bottomLeft: Radius.circular(Dimensions.r24),
+                              topLeft: Radius.circular(Dimensions.r8),
+                              bottomRight: Radius.circular(Dimensions.r8),
                             ),
                             //BoxShadow
                           ),
@@ -168,7 +171,8 @@ class _HomePageState extends State<HomePage> {
                               ),
                               Text(
                                 cat[index],
-                                style: const TextStyle(color: Colors.white),
+                                style: const TextStyle(
+                                    color: AppColors.mainPurple),
                               ),
                             ],
                           ),
@@ -205,6 +209,9 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(Dimensions.r12),
                         ),
                         child: ListTile(
+                          onTap: () {
+                            Navigator.pushNamed(context, "product");
+                          },
                           leading: Container(
                             height: Dimensions.h50,
                             width: Dimensions.w50,
@@ -218,24 +225,30 @@ class _HomePageState extends State<HomePage> {
                           ),
                           title: Text(
                             "Jamun Shot",
+                            textScaleFactor: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: AppColors.mainPurple,
                                 fontSize: Dimensions.h24),
                           ),
                           subtitle: const Text("Rs.120"),
                           trailing: Container(
-                            height: Dimensions.h50,
-                            width: Dimensions.w80,
-                            decoration: BoxDecoration(
-                              color: AppColors.mainPurple,
-                              borderRadius:
-                                  BorderRadius.circular(Dimensions.r24),
-                            ),
-                            child: const Icon(
-                              Icons.add_shopping_cart_outlined,
-                              color: Colors.white,
-                            ),
-                          ),
+                              height: Dimensions.h50,
+                              width: Dimensions.w80,
+                              decoration: BoxDecoration(
+                                color: AppColors.mainPurple,
+                                borderRadius:
+                                    BorderRadius.circular(Dimensions.r24),
+                              ),
+                              child: IconButton(
+                                  onPressed: () {
+                                    Fluttertoast.showToast(
+                                        msg: "Item is added to the cart :)");
+                                  },
+                                  icon: Icon(
+                                    Icons.shopping_cart_outlined,
+                                    color: Colors.white,
+                                  ))),
                         ),
                       ),
                     );

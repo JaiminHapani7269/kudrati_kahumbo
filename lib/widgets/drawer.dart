@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kudrati_kahumbo/helper/helper_function.dart';
 import 'package:kudrati_kahumbo/screen/splash_screen.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
@@ -133,14 +134,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         )),
                     onTap: () async {
                       FirebaseAuth.instance.signOut().whenComplete(() async {
-                        // final SharedPreferences sharedPreferences =
-                        //     await SharedPreferences.getInstance();
-                        setState(() {
-                          // sharedPreferences.remove('mobile').whenComplete(() {
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, "registration", (route) => false);
-                          // });
-                        });
+                        await HelperFunction.saveLogingData(false);
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, "registration", (route) => false);
                       });
                     },
                     textColor: Colors.white,

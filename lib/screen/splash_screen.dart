@@ -1,14 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:kudrati_kahumbo/helper/helper_function.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../helper/helper.dart';
-
-String finalMobile = "";
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,25 +13,23 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  bool _isSignedIn = false;
+  bool isLogIn = false;
 
   @override
   void initState() {
     super.initState();
-    getUserLoggedInStatus();
+    getLoggedInState();
     Timer(
         const Duration(seconds: 3),
         () => Navigator.pushReplacementNamed(
-            context, _isSignedIn ? "registration" : "home"));
+            context, isLogIn ? "home" : "registration"));
   }
 
-  getUserLoggedInStatus() async {
-    await Helper.getUserLoggedInstatus().then((value) {
-      if (value != null) {
-        setState(() {
-          _isSignedIn = value;
-        });
-      }
+  getLoggedInState() async {
+    await HelperFunction.getLoginData().then((logInStatus) {
+      setState(() {
+        isLogIn = logInStatus!;
+      });
     });
   }
 
