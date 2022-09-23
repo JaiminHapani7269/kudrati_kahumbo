@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
@@ -39,15 +37,15 @@ class _ProductDerailScreenState extends State<ProductDerailScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  height: Dimensions.h45,
-                  width: Dimensions.w45,
+                  height: Dimensions.h40,
+                  width: Dimensions.w40,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(Dimensions.h45 / 2),
+                      borderRadius: BorderRadius.circular(Dimensions.h40 / 2),
                       color: Colors.white),
                   child: IconButton(
                       onPressed: () => Navigator.pop(context),
                       icon: const Icon(
-                        Icons.arrow_back_ios_new,
+                        Icons.arrow_back_ios,
                         color: Colors.black,
                       )),
                 ),
@@ -119,10 +117,10 @@ class _ProductDerailScreenState extends State<ProductDerailScreen> {
         ],
       ),
       bottomNavigationBar: Container(
-        height: Dimensions.h100,
+        height: Dimensions.h80,
         padding: EdgeInsets.only(
-          top: Dimensions.h30,
-          bottom: Dimensions.h30,
+          top: Dimensions.h20,
+          bottom: Dimensions.h20,
           left: Dimensions.w20,
           right: Dimensions.w20,
         ),

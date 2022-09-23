@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kudrati_kahumbo/helper/helper_function.dart';
 import 'package:kudrati_kahumbo/screen/splash_screen.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
@@ -43,13 +44,26 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     margin: EdgeInsets.zero,
                     child: UserAccountsDrawerHeader(
                       decoration: BoxDecoration(
-                        color: AppColors.mainPurple,
+                        color: Colors.white,
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(Dimensions.r50),
+                          bottomRight: Radius.circular(Dimensions.r50 * 10),
                         ),
                       ),
-                      accountName: Text("${widget.userName}"),
-                      accountEmail: Text("${widget.mobile}"),
+                      accountName: Text(
+                        "${widget.userName}",
+                        style: TextStyle(
+                            fontSize: 22,
+                            color: AppColors.mainPurple,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      accountEmail: Text(
+                        "${widget.mobile}",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: AppColors.mainPurple,
+                            fontWeight: FontWeight.bold),
+                      ),
                       currentAccountPicture: const CircleAvatar(
                         backgroundImage:
                             AssetImage('assets/images/profile.jpeg'),
@@ -142,6 +156,17 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     textColor: Colors.white,
                   ),
                 ],
+              ),
+            ),
+            Positioned(
+              bottom: Dimensions.h10,
+              left: Dimensions.w10,
+              child: Container(
+                alignment: Alignment.topLeft,
+                child: SvgPicture.asset(
+                  "assets/images/logo-white.svg",
+                  width: Dimensions.w180,
+                ),
               ),
             ),
           ],

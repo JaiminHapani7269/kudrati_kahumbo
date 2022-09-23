@@ -146,35 +146,39 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (context, index) => Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: Dimensions.w5, vertical: Dimensions.h5),
-                        child: Container(
-                          width: Dimensions.w80,
-                          height: Dimensions.h80,
-                          padding: EdgeInsets.all(Dimensions.w10),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 233, 192, 223),
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(Dimensions.r24),
-                              bottomLeft: Radius.circular(Dimensions.r24),
-                              topLeft: Radius.circular(Dimensions.r8),
-                              bottomRight: Radius.circular(Dimensions.r8),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, "catproduct");
+                          },
+                          child: Container(
+                            width: Dimensions.w80,
+                            height: Dimensions.h80,
+                            padding: EdgeInsets.all(Dimensions.w10),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFECE6E9),
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(Dimensions.r24),
+                                bottomLeft: Radius.circular(Dimensions.r24),
+                                topLeft: Radius.circular(Dimensions.r8),
+                                bottomRight: Radius.circular(Dimensions.r8),
+                              ),
                             ),
-                            //BoxShadow
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                "assets/icons/shot.png",
-                                height: Dimensions.h30,
-                              ),
-                              Text(
-                                cat[index],
-                                style: const TextStyle(
-                                    color: AppColors.mainPurple),
-                              ),
-                            ],
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/icons/shot.png",
+                                  height: Dimensions.h30,
+                                ),
+                                Text(
+                                  cat[index],
+                                  style: const TextStyle(
+                                      color: AppColors.mainPurple),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       )),
@@ -197,7 +201,7 @@ class _HomePageState extends State<HomePage> {
                   EdgeInsets.only(left: Dimensions.w15, right: Dimensions.w15),
               child: ListView.builder(
                   shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: 12,
                   itemBuilder: (context, index) {
                     return Padding(
@@ -205,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                           vertical: Dimensions.h5, horizontal: Dimensions.w5),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 233, 192, 223),
+                          color: const Color(0xFFECE6E9),
                           borderRadius: BorderRadius.circular(Dimensions.r12),
                         ),
                         child: ListTile(
@@ -225,30 +229,59 @@ class _HomePageState extends State<HomePage> {
                           ),
                           title: Text(
                             "Jamun Shot",
-                            textScaleFactor: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: AppColors.mainPurple,
-                                fontSize: Dimensions.h24),
+                                fontSize: Dimensions.h20),
                           ),
                           subtitle: const Text("Rs.120"),
                           trailing: Container(
-                              height: Dimensions.h50,
-                              width: Dimensions.w80,
-                              decoration: BoxDecoration(
-                                color: AppColors.mainPurple,
-                                borderRadius:
-                                    BorderRadius.circular(Dimensions.r24),
-                              ),
-                              child: IconButton(
-                                  onPressed: () {
-                                    Fluttertoast.showToast(
-                                        msg: "Item is added to the cart :)");
-                                  },
-                                  icon: Icon(
-                                    Icons.shopping_cart_outlined,
-                                    color: Colors.white,
-                                  ))),
+                            height: Dimensions.h80,
+                            width: Dimensions.w120,
+                            padding:
+                                EdgeInsets.symmetric(horizontal: Dimensions.w5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                    height: Dimensions.h50,
+                                    width: Dimensions.w50,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius:
+                                          BorderRadius.circular(Dimensions.r24),
+                                    ),
+                                    child: IconButton(
+                                        onPressed: () {
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Item is added to your Wishlist :)");
+                                        },
+                                        icon: Icon(
+                                          Icons.favorite_border_outlined,
+                                          color: AppColors.mainPurple,
+                                        ))),
+                                Container(
+                                    height: Dimensions.h50,
+                                    width: Dimensions.w50,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.mainPurple,
+                                      borderRadius:
+                                          BorderRadius.circular(Dimensions.r24),
+                                    ),
+                                    child: IconButton(
+                                        onPressed: () {
+                                          Fluttertoast.showToast(
+                                              msg:
+                                                  "Item is added to the cart :)");
+                                        },
+                                        icon: const Icon(
+                                          Icons.shopping_cart_outlined,
+                                          color: Colors.white,
+                                        ))),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     );

@@ -35,7 +35,9 @@ class Dimensions {
   static double w45 = screenWidth / 8.733;
   static double w50 = screenWidth / 7.86;
   static double w80 = screenWidth / 4.9125;
+  static double w100 = screenWidth / 3.93;
   static double w120 = screenWidth / 3.275;
+  static double w180 = screenWidth / 2.183;
 
   static double r8 = screenWidth / 49.125;
   static double r12 = screenWidth / 32.75;
