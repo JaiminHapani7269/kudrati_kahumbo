@@ -50,6 +50,7 @@ class _HomePageState extends State<HomePage> {
       "Unique Mocktail",
       "Fruit Dish"
     ];
+
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -137,8 +138,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Container(
               height: Dimensions.h120,
-              padding: EdgeInsets.symmetric(
-                  horizontal: Dimensions.w10, vertical: Dimensions.h5),
+              padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
               child: ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
@@ -153,7 +153,10 @@ class _HomePageState extends State<HomePage> {
                           child: Container(
                             width: Dimensions.w80,
                             height: Dimensions.h80,
-                            padding: EdgeInsets.all(Dimensions.w10),
+                            padding: EdgeInsets.only(
+                                left: Dimensions.w5,
+                                right: Dimensions.w5,
+                                bottom: Dimensions.h10),
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: const Color(0xFFECE6E9),
@@ -169,8 +172,8 @@ class _HomePageState extends State<HomePage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Image.asset(
-                                  "assets/icons/shot.png",
-                                  height: Dimensions.h30,
+                                  "assets/images/Jamun1.png",
+                                  height: Dimensions.h50,
                                 ),
                                 Text(
                                   cat[index],
@@ -223,7 +226,7 @@ class _HomePageState extends State<HomePage> {
                                 borderRadius:
                                     BorderRadius.circular(Dimensions.r12),
                                 image: const DecorationImage(
-                                  fit: BoxFit.fitHeight,
+                                  fit: BoxFit.contain,
                                   image: AssetImage("assets/images/jamun.jpg"),
                                 )),
                           ),
@@ -232,7 +235,7 @@ class _HomePageState extends State<HomePage> {
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: AppColors.mainPurple,
-                                fontSize: Dimensions.h20),
+                                fontSize: Dimensions.h25),
                           ),
                           subtitle: const Text("Rs.120"),
                           trailing: Container(
@@ -257,7 +260,7 @@ class _HomePageState extends State<HomePage> {
                                               msg:
                                                   "Item is added to your Wishlist :)");
                                         },
-                                        icon: Icon(
+                                        icon: const Icon(
                                           Icons.favorite_border_outlined,
                                           color: AppColors.mainPurple,
                                         ))),

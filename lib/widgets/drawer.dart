@@ -149,6 +149,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     onTap: () async {
                       FirebaseAuth.instance.signOut().whenComplete(() async {
                         await HelperFunction.saveLogingData(false);
+                        // ignore: use_build_context_synchronously
                         Navigator.pushNamedAndRemoveUntil(
                             context, "registration", (route) => false);
                       });
@@ -160,7 +161,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
             Positioned(
               bottom: Dimensions.h10,
-              left: Dimensions.w10,
+              left: Dimensions.w20,
               child: Container(
                 alignment: Alignment.topLeft,
                 child: SvgPicture.asset(

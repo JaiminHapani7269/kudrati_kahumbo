@@ -33,11 +33,7 @@ class _CartDrawerState extends State<CartDrawer> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    "Cart Page",
-                    style: TextStyle(
-                        color: Colors.white, fontSize: Dimensions.h35),
-                  ),
+                  DrawerHeader(child: Text("Your Cart")),
                 ],
               ),
             ),

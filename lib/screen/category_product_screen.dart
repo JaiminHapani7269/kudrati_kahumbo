@@ -65,7 +65,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(Dimensions.r12),
                           image: const DecorationImage(
-                            fit: BoxFit.fitHeight,
+                            fit: BoxFit.cover,
                             image: AssetImage("assets/images/choco.jpg"),
                           )),
                     ),
