@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kudrati_kahumbo/firebase_options.dart';
 import 'package:kudrati_kahumbo/screen/auth/regisration_screen.dart';
 import 'package:kudrati_kahumbo/screen/auth/otp_screen.dart';
-import 'package:kudrati_kahumbo/screen/category_product_screen.dart';
 import 'package:kudrati_kahumbo/screen/home_page.dart';
 import 'package:kudrati_kahumbo/screen/product_detail_screen.dart';
 import 'package:kudrati_kahumbo/screen/splash_screen.dart';
@@ -38,8 +37,8 @@ class MyApp extends StatelessWidget {
         'home': (context) => const HomePage(),
         'registration': (context) => const RegistrationScreen(),
         'otp': (context) => const OTPScreen(),
-        'product': (context) => const ProductDerailScreen(),
-        'catproduct': (context) => const CategoryProductScreen(),
+        // 'product': (context) => const ProductDerailScreen(),
+        // 'catproduct': (context) => CategoryProductScreen(),
       },
     );
   }

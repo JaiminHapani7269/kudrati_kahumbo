@@ -1,14 +1,18 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:kudrati_kahumbo/screen/category_product_screen.dart';
+import 'package:kudrati_kahumbo/screen/product_detail_screen.dart';
+
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
 import 'package:kudrati_kahumbo/widgets/cart.dart';
 import 'package:kudrati_kahumbo/widgets/drawer.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 import '../model/user_model.dart';
 
@@ -56,7 +60,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: AppColors.mainPurple,
         centerTitle: false,
-        elevation: 0,
+        elevation: 2,
         title: SvgPicture.asset(
           "assets/images/Group.svg",
         ),
@@ -136,24 +140,6 @@ class _HomePageState extends State<HomePage> {
                     fontSize: 24),
               ),
             ),
-            // Container(
-            //   height: Dimensions.h120,
-            //   padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
-            //   child: ListView.builder(
-            //       shrinkWrap: true,
-            //       scrollDirection: Axis.horizontal,
-            //       itemCount: cat.length,
-            //       itemBuilder: (context, index) => Padding(
-            //             padding: EdgeInsets.symmetric(
-            //                 horizontal: Dimensions.w5, vertical: Dimensions.h5),
-            //             child: InkWell(
-            //               onTap: () {
-            //                 Navigator.pushNamed(context, "catproduct");
-            //               },
-            //               child:
-            //             ),
-            //           )),
-            // ),
             SizedBox(height: Dimensions.h10),
             Container(
               height: Dimensions.h100,
@@ -164,7 +150,10 @@ class _HomePageState extends State<HomePage> {
                   builder:
                       (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                     if (!streamSnapshot.hasData) {
-                      return Center(child: const CircularProgressIndicator());
+                      return Center(
+                          child: CircularProgressIndicator(
+                        color: AppColors.mainPurple,
+                      ));
                     }
                     return ListView.builder(
                         shrinkWrap: true,
@@ -172,44 +161,16 @@ class _HomePageState extends State<HomePage> {
                         physics: BouncingScrollPhysics(),
                         itemCount: streamSnapshot.data!.docs.length,
                         itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: Dimensions.w10),
-                            child: Container(
-                              width: Dimensions.w80,
-                              height: Dimensions.h80,
-                              padding: EdgeInsets.only(
-                                  left: Dimensions.w5,
-                                  right: Dimensions.w5,
-                                  bottom: Dimensions.h10),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: const Color(0xFFECE6E9),
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(Dimensions.r24),
-                                  bottomLeft: Radius.circular(Dimensions.r24),
-                                  topLeft: Radius.circular(Dimensions.r8),
-                                  bottomRight: Radius.circular(Dimensions.r8),
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    streamSnapshot.data!.docs[index]["icon"],
-                                    height: Dimensions.h40,
-                                  ),
-                                  Text(
-                                    streamSnapshot.data!.docs[index]["cname"],
-                                    style: const TextStyle(
-                                        color: AppColors.mainPurple),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
+                          return Category(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => CategoryProductScreen(
+                                        id: streamSnapshot.data!.docs[index].id,
+                                        collection: streamSnapshot
+                                            .data!.docs[index]["cname"])));
+                              },
+                              icon: streamSnapshot.data!.docs[index]["icon"],
+                              cname: streamSnapshot.data!.docs[index]["cname"]);
                         });
                   }),
             ),
@@ -226,98 +187,172 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(height: Dimensions.h10),
-            Padding(
-              padding:
-                  EdgeInsets.only(left: Dimensions.w15, right: Dimensions.w15),
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 12,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: Dimensions.h5, horizontal: Dimensions.w5),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFECE6E9),
-                          borderRadius: BorderRadius.circular(Dimensions.r12),
-                        ),
-                        child: ListTile(
-                          onTap: () {
-                            Navigator.pushNamed(context, "product");
-                          },
-                          leading: Container(
-                            height: Dimensions.h50,
-                            width: Dimensions.w50,
-                            decoration: BoxDecoration(
+            StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("popular")
+                    .snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                        child: CircularProgressIndicator(
+                      color: AppColors.mainPurple,
+                    ));
+                  }
+                  return Padding(
+                    padding: EdgeInsets.only(
+                        left: Dimensions.w15, right: Dimensions.w15),
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: Dimensions.h5,
+                                horizontal: Dimensions.w5),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFECE6E9),
                                 borderRadius:
                                     BorderRadius.circular(Dimensions.r12),
-                                image: const DecorationImage(
-                                  fit: BoxFit.contain,
-                                  image: AssetImage("assets/images/jamun.jpg"),
-                                )),
-                          ),
-                          title: Text(
-                            "Jamun Shot",
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: AppColors.mainPurple,
-                                fontSize: Dimensions.h25),
-                          ),
-                          subtitle: const Text("Rs.120"),
-                          trailing: Container(
-                            height: Dimensions.h80,
-                            width: Dimensions.w120,
-                            padding:
-                                EdgeInsets.symmetric(horizontal: Dimensions.w5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                    height: Dimensions.h50,
-                                    width: Dimensions.w50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
+                              ),
+                              child: ListTile(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => ProductDerailScreen(
+                                          id: snapshot.data!.docs[index].id)));
+                                },
+                                leading: Container(
+                                  height: Dimensions.h50,
+                                  width: Dimensions.w50,
+                                  decoration: BoxDecoration(
                                       borderRadius:
-                                          BorderRadius.circular(Dimensions.r24),
-                                    ),
-                                    child: IconButton(
-                                        onPressed: () {
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  "Item is added to your Wishlist :)");
-                                        },
-                                        icon: const Icon(
-                                          Icons.favorite_border_outlined,
-                                          color: AppColors.mainPurple,
-                                        ))),
-                                Container(
-                                    height: Dimensions.h50,
-                                    width: Dimensions.w50,
-                                    decoration: BoxDecoration(
+                                          BorderRadius.circular(Dimensions.r12),
+                                      image: DecorationImage(
+                                        fit: BoxFit.contain,
+                                        image: NetworkImage(snapshot
+                                            .data!.docs[index]["image"]),
+                                      )),
+                                ),
+                                title: Text(
+                                  snapshot.data!.docs[index]["pname"],
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
                                       color: AppColors.mainPurple,
-                                      borderRadius:
-                                          BorderRadius.circular(Dimensions.r24),
-                                    ),
-                                    child: IconButton(
-                                        onPressed: () {
-                                          Fluttertoast.showToast(
-                                              msg:
-                                                  "Item is added to the cart :)");
-                                        },
-                                        icon: const Icon(
-                                          Icons.shopping_cart_outlined,
-                                          color: Colors.white,
-                                        ))),
-                              ],
+                                      fontSize: Dimensions.h25),
+                                ),
+                                subtitle: Text(
+                                    "Rs.${snapshot.data!.docs[index]["price"]}"),
+                                trailing: Container(
+                                  height: Dimensions.h80,
+                                  width: Dimensions.w120,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: Dimensions.w5),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                          height: Dimensions.h50,
+                                          width: Dimensions.w50,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(
+                                                Dimensions.r24),
+                                          ),
+                                          child: IconButton(
+                                              onPressed: () {
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        "Item is added to your Wishlist :)");
+                                              },
+                                              icon: const Icon(
+                                                Icons.favorite_border_outlined,
+                                                color: AppColors.mainPurple,
+                                              ))),
+                                      Container(
+                                          height: Dimensions.h50,
+                                          width: Dimensions.w50,
+                                          decoration: BoxDecoration(
+                                            color: AppColors.mainPurple,
+                                            borderRadius: BorderRadius.circular(
+                                                Dimensions.r24),
+                                          ),
+                                          child: IconButton(
+                                              onPressed: () {
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        "Item is added to the cart :)");
+                                              },
+                                              icon: const Icon(
+                                                Icons.shopping_cart_outlined,
+                                                color: Colors.white,
+                                              ))),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
-            ),
+                          );
+                        }),
+                  );
+                })
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class Category extends StatelessWidget {
+  final String icon;
+  final String cname;
+  final Function()? onTap;
+  const Category({
+    Key? key,
+    required this.icon,
+    required this.cname,
+    this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
+        child: Container(
+          width: Dimensions.w80,
+          height: Dimensions.h80,
+          padding: EdgeInsets.only(
+              left: Dimensions.w5,
+              right: Dimensions.w5,
+              bottom: Dimensions.h10),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: const Color(0xFFECE6E9),
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(Dimensions.r24),
+              bottomLeft: Radius.circular(Dimensions.r24),
+              topLeft: Radius.circular(Dimensions.r8),
+              bottomRight: Radius.circular(Dimensions.r8),
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                icon,
+                height: Dimensions.h40,
+              ),
+              Text(
+                cname,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: AppColors.mainPurple),
+              ),
+            ],
+          ),
         ),
       ),
     );
