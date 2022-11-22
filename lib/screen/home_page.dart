@@ -136,55 +136,82 @@ class _HomePageState extends State<HomePage> {
                     fontSize: 24),
               ),
             ),
+            // Container(
+            //   height: Dimensions.h120,
+            //   padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
+            //   child: ListView.builder(
+            //       shrinkWrap: true,
+            //       scrollDirection: Axis.horizontal,
+            //       itemCount: cat.length,
+            //       itemBuilder: (context, index) => Padding(
+            //             padding: EdgeInsets.symmetric(
+            //                 horizontal: Dimensions.w5, vertical: Dimensions.h5),
+            //             child: InkWell(
+            //               onTap: () {
+            //                 Navigator.pushNamed(context, "catproduct");
+            //               },
+            //               child:
+            //             ),
+            //           )),
+            // ),
+            SizedBox(height: Dimensions.h10),
             Container(
-              height: Dimensions.h120,
-              padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: cat.length,
-                  itemBuilder: (context, index) => Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: Dimensions.w5, vertical: Dimensions.h5),
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, "catproduct");
-                          },
-                          child: Container(
-                            width: Dimensions.w80,
-                            height: Dimensions.h80,
-                            padding: EdgeInsets.only(
-                                left: Dimensions.w5,
-                                right: Dimensions.w5,
-                                bottom: Dimensions.h10),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFECE6E9),
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(Dimensions.r24),
-                                bottomLeft: Radius.circular(Dimensions.r24),
-                                topLeft: Radius.circular(Dimensions.r8),
-                                bottomRight: Radius.circular(Dimensions.r8),
+              height: Dimensions.h100,
+              child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection("category")
+                      .snapshots(),
+                  builder:
+                      (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                    if (!streamSnapshot.hasData) {
+                      return Center(child: const CircularProgressIndicator());
+                    }
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        physics: BouncingScrollPhysics(),
+                        itemCount: streamSnapshot.data!.docs.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: Dimensions.w10),
+                            child: Container(
+                              width: Dimensions.w80,
+                              height: Dimensions.h80,
+                              padding: EdgeInsets.only(
+                                  left: Dimensions.w5,
+                                  right: Dimensions.w5,
+                                  bottom: Dimensions.h10),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFECE6E9),
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(Dimensions.r24),
+                                  bottomLeft: Radius.circular(Dimensions.r24),
+                                  topLeft: Radius.circular(Dimensions.r8),
+                                  bottomRight: Radius.circular(Dimensions.r8),
+                                ),
+                              ),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    streamSnapshot.data!.docs[index]["icon"],
+                                    height: Dimensions.h40,
+                                  ),
+                                  Text(
+                                    streamSnapshot.data!.docs[index]["cname"],
+                                    style: const TextStyle(
+                                        color: AppColors.mainPurple),
+                                  ),
+                                ],
                               ),
                             ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  "assets/images/Jamun1.png",
-                                  height: Dimensions.h50,
-                                ),
-                                Text(
-                                  cat[index],
-                                  style: const TextStyle(
-                                      color: AppColors.mainPurple),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      )),
+                          );
+                        });
+                  }),
             ),
             SizedBox(height: Dimensions.h10),
             Container(
