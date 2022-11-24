@@ -43,18 +43,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    List cat = [
-      "Fruit Shots",
-      "Chocolate Shake",
-      "Coffee",
-      "Ice Tea",
-      "Fruit Juices",
-      "Mojito's World",
-      "Fruit Layer",
-      "Unique Mocktail",
-      "Fruit Dish"
-    ];
-
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
@@ -217,11 +205,6 @@ class _HomePageState extends State<HomePage> {
                                     BorderRadius.circular(Dimensions.r12),
                               ),
                               child: ListTile(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => ProductDerailScreen(
-                                          id: snapshot.data!.docs[index].id)));
-                                },
                                 leading: Container(
                                   height: Dimensions.h50,
                                   width: Dimensions.w50,
@@ -246,20 +229,12 @@ class _HomePageState extends State<HomePage> {
                                 trailing: Container(
                                   height: Dimensions.h80,
                                   width: Dimensions.w120,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: Dimensions.w5),
+                                  padding: EdgeInsets.symmetric(horizontal: 0),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
                                           height: Dimensions.h50,
                                           width: Dimensions.w50,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(
-                                                Dimensions.r24),
-                                          ),
                                           child: IconButton(
                                               onPressed: () {
                                                 Fluttertoast.showToast(
@@ -270,13 +245,18 @@ class _HomePageState extends State<HomePage> {
                                                 Icons.favorite_border_outlined,
                                                 color: AppColors.mainPurple,
                                               ))),
+                                      SizedBox(width: Dimensions.w5),
                                       Container(
                                           height: Dimensions.h50,
                                           width: Dimensions.w50,
                                           decoration: BoxDecoration(
-                                            color: AppColors.mainPurple,
-                                            borderRadius: BorderRadius.circular(
-                                                Dimensions.r24),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            gradient: LinearGradient(colors: [
+                                              Colors.black.withOpacity(0.6),
+                                              AppColors.mainPurple
+                                                  .withOpacity(0.7),
+                                            ]),
                                           ),
                                           child: IconButton(
                                               onPressed: () {

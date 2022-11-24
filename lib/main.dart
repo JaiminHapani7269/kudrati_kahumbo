@@ -6,7 +6,6 @@ import 'package:kudrati_kahumbo/firebase_options.dart';
 import 'package:kudrati_kahumbo/screen/auth/regisration_screen.dart';
 import 'package:kudrati_kahumbo/screen/auth/otp_screen.dart';
 import 'package:kudrati_kahumbo/screen/home_page.dart';
-import 'package:kudrati_kahumbo/screen/product_detail_screen.dart';
 import 'package:kudrati_kahumbo/screen/splash_screen.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
 

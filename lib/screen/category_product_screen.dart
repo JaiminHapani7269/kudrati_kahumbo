@@ -10,7 +10,7 @@ import '../utils/dimensions.dart';
 import '../widgets/cart.dart';
 import '../widgets/drawer.dart';
 
-class CategoryProductScreen extends StatelessWidget {
+class CategoryProductScreen extends StatefulWidget {
   final String id;
   final String collection;
   const CategoryProductScreen({
@@ -20,9 +20,15 @@ class CategoryProductScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<CategoryProductScreen> createState() => _CategoryProductScreenState();
+}
+
+class _CategoryProductScreenState extends State<CategoryProductScreen> {
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // key: scaffoldKey,
+      key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: AppColors.mainPurple,
         centerTitle: false,
@@ -37,9 +43,9 @@ class CategoryProductScreen extends StatelessWidget {
           IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined)),
           IconButton(
               onPressed: () {}, icon: const Icon(Icons.favorite_outline)),
-          //   IconButton(
-          //        onPressed: () => scaffoldKey.currentState!.openEndDrawer(),
-          //       icon: const Icon(CupertinoIcons.shopping_cart)),
+          IconButton(
+              onPressed: () => scaffoldKey.currentState!.openEndDrawer(),
+              icon: const Icon(CupertinoIcons.shopping_cart)),
         ],
       ),
       endDrawer: CartDrawer(),
@@ -48,8 +54,8 @@ class CategoryProductScreen extends StatelessWidget {
         child: FutureBuilder(
           future: FirebaseFirestore.instance
               .collection("category")
-              .doc(id)
-              .collection(collection)
+              .doc(widget.id)
+              .collection(widget.collection)
               .get(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (!snapshot.hasData) {
@@ -64,54 +70,31 @@ class CategoryProductScreen extends StatelessWidget {
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: Dimensions.h5, horizontal: Dimensions.w5),
+                    padding: const EdgeInsets.all(8.0),
                     child: Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: Dimensions.w10, vertical: Dimensions.h5),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFECE6E9),
-                        borderRadius: BorderRadius.circular(Dimensions.r12),
-                      ),
+                          color: const Color(0xFFECE6E9),
+                          borderRadius: BorderRadius.circular(Dimensions.r12)),
                       child: ListTile(
-                        onTap: () {
-                          Navigator.pushNamed(context, "product");
-                        },
-                        // leading: Container(
-                        //   height: Dimensions.h50,
-                        //   width: Dimensions.w50,
-                        //   decoration: BoxDecoration(
-                        //       borderRadius:
-                        //           BorderRadius.circular(Dimensions.r12),
-                        //       image: DecorationImage(
-                        //         fit: BoxFit.contain,
-                        //         image: NetworkImage(
-                        //             snapshot.data!.docs[index]["image"]),
-                        //       )),
-                        // ),
                         title: Text(
                           snapshot.data!.docs[index]["pname"],
-                          // overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              color: AppColors.mainPurple,
-                              fontSize: Dimensions.h25),
+                            color: AppColors.mainPurple,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                        subtitle:
-                            Text("Rs.${snapshot.data!.docs[index]["price"]}"),
                         trailing: Container(
                           height: Dimensions.h80,
                           width: Dimensions.w120,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: Dimensions.w5),
+                          padding: EdgeInsets.only(left: 14),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
                                   height: Dimensions.h50,
                                   width: Dimensions.w50,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                        BorderRadius.circular(Dimensions.r24),
-                                  ),
                                   child: IconButton(
                                       onPressed: () {
                                         Fluttertoast.showToast(
@@ -122,13 +105,16 @@ class CategoryProductScreen extends StatelessWidget {
                                         Icons.favorite_border_outlined,
                                         color: AppColors.mainPurple,
                                       ))),
+                              SizedBox(width: Dimensions.w5),
                               Container(
                                   height: Dimensions.h50,
                                   width: Dimensions.w50,
                                   decoration: BoxDecoration(
-                                    color: AppColors.mainPurple,
-                                    borderRadius:
-                                        BorderRadius.circular(Dimensions.r24),
+                                    borderRadius: BorderRadius.circular(10),
+                                    gradient: LinearGradient(colors: [
+                                      Colors.black.withOpacity(0.6),
+                                      AppColors.mainPurple.withOpacity(0.7),
+                                    ]),
                                   ),
                                   child: IconButton(
                                       onPressed: () {
@@ -141,6 +127,17 @@ class CategoryProductScreen extends StatelessWidget {
                                         color: Colors.white,
                                       ))),
                             ],
+                          ),
+                        ),
+                        subtitle: Padding(
+                          padding: EdgeInsets.only(top: 10),
+                          child: Text(
+                            "₹${snapshot.data!.docs[index]["price"]}",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ),
