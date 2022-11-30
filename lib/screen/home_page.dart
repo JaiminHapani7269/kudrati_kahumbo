@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kudrati_kahumbo/screen/category_product_screen.dart';
-import 'package:kudrati_kahumbo/screen/product_detail_screen.dart';
 
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
@@ -129,16 +128,17 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(height: Dimensions.h10),
-            Container(
+            SizedBox(
               height: Dimensions.h100,
               child: StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection("category")
+                      .orderBy("cid", descending: false)
                       .snapshots(),
                   builder:
                       (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                     if (!streamSnapshot.hasData) {
-                      return Center(
+                      return const Center(
                           child: CircularProgressIndicator(
                         color: AppColors.mainPurple,
                       ));
@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                     return ListView.builder(
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
-                        physics: BouncingScrollPhysics(),
+                        physics: const BouncingScrollPhysics(),
                         itemCount: streamSnapshot.data!.docs.length,
                         itemBuilder: (context, index) {
                           return Category(
@@ -181,7 +181,7 @@ class _HomePageState extends State<HomePage> {
                     .snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) {
-                    return Center(
+                    return const Center(
                         child: CircularProgressIndicator(
                       color: AppColors.mainPurple,
                     ));
@@ -219,20 +219,25 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 title: Text(
                                   snapshot.data!.docs[index]["pname"],
-                                  overflow: TextOverflow.ellipsis,
+                                  // overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       color: AppColors.mainPurple,
-                                      fontSize: Dimensions.h25),
+                                      fontSize: Dimensions.h20),
                                 ),
                                 subtitle: Text(
-                                    "Rs.${snapshot.data!.docs[index]["price"]}"),
+                                  "₹.${snapshot.data!.docs[index]["price"]}",
+                                  style: TextStyle(
+                                      color: AppColors.mainPurple,
+                                      fontSize: Dimensions.h15),
+                                ),
                                 trailing: Container(
                                   height: Dimensions.h80,
                                   width: Dimensions.w120,
-                                  padding: EdgeInsets.symmetric(horizontal: 0),
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 0),
                                   child: Row(
                                     children: [
-                                      Container(
+                                      SizedBox(
                                           height: Dimensions.h50,
                                           width: Dimensions.w50,
                                           child: IconButton(
@@ -254,8 +259,7 @@ class _HomePageState extends State<HomePage> {
                                                 BorderRadius.circular(10),
                                             gradient: LinearGradient(colors: [
                                               Colors.black.withOpacity(0.6),
-                                              AppColors.mainPurple
-                                                  .withOpacity(0.7),
+                                              AppColors.mainPurple,
                                             ]),
                                           ),
                                           child: IconButton(

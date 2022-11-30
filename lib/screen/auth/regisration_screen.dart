@@ -3,9 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:kudrati_kahumbo/helper/helper_function.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../utils/app_colors.dart';
 
@@ -146,7 +144,30 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       height: Dimensions.h45,
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: signInWithPhone,
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            await FirebaseAuth.instance.verifyPhoneNumber(
+                              phoneNumber: "${countryCode.text + mobile.text}",
+                              verificationCompleted:
+                                  (PhoneAuthCredential credential) {},
+                              verificationFailed: (FirebaseAuthException e) {
+                                Fluttertoast.showToast(msg: "Auth Failed!");
+                              },
+                              codeSent: (String verificationId,
+                                  int? resendToken) async {
+                                Navigator.pushReplacementNamed(context, "otp");
+                                Fluttertoast.showToast(msg: "OTP Sent :)");
+                                RegistrationScreen.verify = verificationId;
+                                RegistrationScreen.username = userName.text;
+                                RegistrationScreen.mobile = mobile.text;
+                              },
+                              codeAutoRetrievalTimeout:
+                                  (String verificationId) {
+                                Fluttertoast.showToast(msg: "Timeout!");
+                              },
+                            );
+                          }
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.mainPurple,
                           shape: RoundedRectangleBorder(

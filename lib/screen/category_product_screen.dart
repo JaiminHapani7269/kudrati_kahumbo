@@ -8,7 +8,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../utils/app_colors.dart';
 import '../utils/dimensions.dart';
 import '../widgets/cart.dart';
-import '../widgets/drawer.dart';
 
 class CategoryProductScreen extends StatefulWidget {
   final String id;
@@ -70,7 +69,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   return Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(Dimensions.h5),
                     child: Container(
                       padding: EdgeInsets.symmetric(
                           horizontal: Dimensions.w10, vertical: Dimensions.h5),
@@ -82,17 +81,17 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                           snapshot.data!.docs[index]["pname"],
                           style: TextStyle(
                             color: AppColors.mainPurple,
-                            fontSize: 24,
+                            fontSize: Dimensions.h24,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                         trailing: Container(
                           height: Dimensions.h80,
                           width: Dimensions.w120,
-                          padding: EdgeInsets.only(left: 14),
+                          padding: EdgeInsets.only(left: Dimensions.w12),
                           child: Row(
                             children: [
-                              Container(
+                              SizedBox(
                                   height: Dimensions.h50,
                                   width: Dimensions.w50,
                                   child: IconButton(
@@ -110,10 +109,11 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                                   height: Dimensions.h50,
                                   width: Dimensions.w50,
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius:
+                                        BorderRadius.circular(Dimensions.r12),
                                     gradient: LinearGradient(colors: [
                                       Colors.black.withOpacity(0.6),
-                                      AppColors.mainPurple.withOpacity(0.7),
+                                      AppColors.mainPurple,
                                     ]),
                                   ),
                                   child: IconButton(
@@ -130,10 +130,10 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                           ),
                         ),
                         subtitle: Padding(
-                          padding: EdgeInsets.only(top: 10),
+                          padding: EdgeInsets.only(top: Dimensions.h10),
                           child: Text(
-                            "₹${snapshot.data!.docs[index]["price"]}",
-                            style: TextStyle(
+                            "₹.${snapshot.data!.docs[index]["price"]}",
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 24,
                               fontWeight: FontWeight.w500,

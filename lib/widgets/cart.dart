@@ -4,8 +4,6 @@ import 'package:kudrati_kahumbo/utils/dimensions.dart';
 import '../utils/app_colors.dart';
 
 class CartDrawer extends StatefulWidget {
-  CartDrawer({Key? key}) : super(key: key) {}
-
   @override
   State<CartDrawer> createState() => _CartDrawerState();
 }

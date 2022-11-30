@@ -1,4 +1,4 @@
-import 'dart:async';
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,8 +8,6 @@ import 'package:kudrati_kahumbo/model/user_model.dart';
 import 'package:kudrati_kahumbo/screen/auth/regisration_screen.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
 import 'package:pinput/pinput.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../helper/helper_function.dart';
 import '../../utils/app_colors.dart';
 
@@ -138,7 +136,7 @@ class _OTPScreenState extends State<OTPScreen> {
                             Navigator.pushNamedAndRemoveUntil(
                                 context, "home", (route) => false);
                           });
-                        } on FirebaseAuthException catch (e) {
+                        } on FirebaseAuthException {
                           Fluttertoast.showToast(
                               msg: "Otp Wrong !", textColor: Colors.red);
                         }

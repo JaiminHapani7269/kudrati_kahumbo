@@ -10,6 +10,6 @@ class HelperFunction {
 
   static Future<bool?> getLoginData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return await preferences.getBool(logKey);
+    return preferences.getBool(logKey);
   }
 }
