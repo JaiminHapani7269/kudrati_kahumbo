@@ -7,7 +7,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../utils/app_colors.dart';
 import '../utils/dimensions.dart';
-import '../widgets/cart.dart';
 
 class CategoryProductScreen extends StatefulWidget {
   final String id;
@@ -43,11 +42,10 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
           IconButton(
               onPressed: () {}, icon: const Icon(Icons.favorite_outline)),
           IconButton(
-              onPressed: () => scaffoldKey.currentState!.openEndDrawer(),
+              onPressed: () => Navigator.of(context).pushNamed('cart'),
               icon: const Icon(CupertinoIcons.shopping_cart)),
         ],
       ),
-      endDrawer: CartDrawer(),
       body: Padding(
         padding: EdgeInsets.only(left: Dimensions.w15, right: Dimensions.w15),
         child: FutureBuilder(
@@ -68,6 +66,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                 shrinkWrap: true,
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
+                  var data = snapshot.data!.docs[index];
                   return Padding(
                     padding: EdgeInsets.all(Dimensions.h5),
                     child: Container(
@@ -78,11 +77,11 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                           borderRadius: BorderRadius.circular(Dimensions.r12)),
                       child: ListTile(
                         title: Text(
-                          snapshot.data!.docs[index]["pname"],
+                          data["pname"],
                           style: TextStyle(
                             color: AppColors.mainPurple,
                             fontSize: Dimensions.h24,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         trailing: Container(
@@ -132,7 +131,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                         subtitle: Padding(
                           padding: EdgeInsets.only(top: Dimensions.h10),
                           child: Text(
-                            "₹.${snapshot.data!.docs[index]["price"]}",
+                            "₹.${data["price"]}",
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 24,

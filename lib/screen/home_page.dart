@@ -59,11 +59,12 @@ class _HomePageState extends State<HomePage> {
           IconButton(
               onPressed: () {}, icon: const Icon(Icons.favorite_outline)),
           IconButton(
-              onPressed: () => scaffoldKey.currentState!.openEndDrawer(),
+              onPressed: () {
+                Navigator.of(context).pushNamed('cart');
+              },
               icon: const Icon(CupertinoIcons.shopping_cart)),
         ],
       ),
-      endDrawer: CartDrawer(),
       drawer: CustomDrawer(
         userName: loggedInUser.c_name,
         mobile: loggedInUser.mobile,
@@ -149,16 +150,16 @@ class _HomePageState extends State<HomePage> {
                         physics: const BouncingScrollPhysics(),
                         itemCount: streamSnapshot.data!.docs.length,
                         itemBuilder: (context, index) {
+                          var data = streamSnapshot.data!.docs[index];
                           return Category(
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => CategoryProductScreen(
                                         id: streamSnapshot.data!.docs[index].id,
-                                        collection: streamSnapshot
-                                            .data!.docs[index]["cname"])));
+                                        collection: data["cname"])));
                               },
-                              icon: streamSnapshot.data!.docs[index]["icon"],
-                              cname: streamSnapshot.data!.docs[index]["cname"]);
+                              icon: data["icon"],
+                              cname: data["cname"]);
                         });
                   }),
             ),
@@ -194,6 +195,7 @@ class _HomePageState extends State<HomePage> {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (context, index) {
+                          var data = snapshot.data!.docs[index];
                           return Padding(
                             padding: EdgeInsets.symmetric(
                                 vertical: Dimensions.h5,
@@ -213,21 +215,21 @@ class _HomePageState extends State<HomePage> {
                                           BorderRadius.circular(Dimensions.r12),
                                       image: DecorationImage(
                                         fit: BoxFit.contain,
-                                        image: NetworkImage(snapshot
-                                            .data!.docs[index]["image"]),
+                                        image: NetworkImage(data["image"]),
                                       )),
                                 ),
                                 title: Text(
-                                  snapshot.data!.docs[index]["pname"],
+                                  data["pname"],
                                   // overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       color: AppColors.mainPurple,
-                                      fontSize: Dimensions.h20),
+                                      fontSize: Dimensions.h20,
+                                      fontWeight: FontWeight.w700),
                                 ),
                                 subtitle: Text(
-                                  "₹.${snapshot.data!.docs[index]["price"]}",
+                                  "₹.${data["price"]}",
                                   style: TextStyle(
-                                      color: AppColors.mainPurple,
+                                      color: Colors.black,
                                       fontSize: Dimensions.h15),
                                 ),
                                 trailing: Container(
