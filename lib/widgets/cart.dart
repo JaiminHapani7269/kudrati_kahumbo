@@ -49,6 +49,7 @@ class CartPage extends StatelessWidget {
                     );
                   }
                   return CartTile(
+                      productId: data["pid"],
                       productName: data['pname'],
                       prodcutPrice: data['price'],
                       qty: data['qty']);
