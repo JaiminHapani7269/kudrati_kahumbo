@@ -1,7 +1,9 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
-
+import 'package:kudrati_kahumbo/widgets/cart_tile.dart';
 import '../utils/app_colors.dart';
 
 class CartPage extends StatelessWidget {
@@ -19,109 +21,39 @@ class CartPage extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
         ),
       ),
-      body: ListView.builder(
-        itemCount: 4,
-        itemBuilder: ((context, index) {
-          return Column(
-            children: [
-              Container(
-                height: Dimensions.h120,
-                width: double.infinity,
-                margin: EdgeInsets.all(Dimensions.w15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Dimensions.r12),
-                  color: Color(0xFFE8C5D7),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey.withOpacity(0.5), blurRadius: 10)
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                        padding: EdgeInsets.all(Dimensions.h15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              "Product Name",
-                              style: TextStyle(
-                                color: AppColors.mainPurple,
-                                fontSize: Dimensions.h24,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Text(
-                              "₹.Price",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: Dimensions.h18,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection("cart")
+              .doc(FirebaseAuth.instance.currentUser!.uid)
+              .collection("userCart")
+              .snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+            if (!streamSnapshot.hasData) {
+              return const Center(
+                  child: CircularProgressIndicator(
+                color: AppColors.mainPurple,
+              ));
+            }
+            return ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                physics: const BouncingScrollPhysics(),
+                itemCount: streamSnapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  var data = streamSnapshot.data!.docs[index];
+                  if (!streamSnapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.mainPurple,
                       ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        padding: EdgeInsets.all(Dimensions.h10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            MaterialButton(
-                              color: AppColors.mainPurple,
-                              minWidth: Dimensions.w40,
-                              height: Dimensions.h30,
-                              onPressed: () {},
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: const Icon(
-                                Icons.delete,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Container(
-                              height: Dimensions.h40,
-                              width: Dimensions.w120,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.remove_circle,
-                                          size: Dimensions.h25,
-                                          color: AppColors.mainPurple)),
-                                  Text(
-                                    "1",
-                                    style: TextStyle(
-                                        fontSize: Dimensions.h18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.add_circle,
-                                          size: Dimensions.h25,
-                                          color: AppColors.mainPurple)),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          );
-        }),
-      ),
+                    );
+                  }
+                  return CartTile(
+                      productName: data['pname'],
+                      prodcutPrice: data['price'],
+                      qty: data['qty']);
+                });
+          }),
       bottomNavigationBar: SizedBox(
         child: GestureDetector(
           onTap: () {},

@@ -6,18 +6,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:kudrati_kahumbo/screen/category_product_screen.dart';
 
+import 'package:kudrati_kahumbo/screen/category_product_screen.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
-import 'package:kudrati_kahumbo/widgets/cart.dart';
 import 'package:kudrati_kahumbo/widgets/drawer.dart';
 
 import '../model/user_model.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
+  const HomePage({
+    Key? key,
+  }) : super(key: key);
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -266,6 +266,20 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                           child: IconButton(
                                               onPressed: () {
+                                                FirebaseFirestore.instance
+                                                    .collection("cart")
+                                                    .doc(FirebaseAuth.instance
+                                                        .currentUser!.uid)
+                                                    .collection("userCart")
+                                                    .doc(data["pid"])
+                                                    .set({
+                                                  "pid": data["pid"],
+                                                  "uid": FirebaseAuth.instance
+                                                      .currentUser!.uid,
+                                                  "pname": data["pname"],
+                                                  "price": data["price"],
+                                                  "qty": 1,
+                                                });
                                                 Fluttertoast.showToast(
                                                     msg:
                                                         "Item is added to the cart :)");

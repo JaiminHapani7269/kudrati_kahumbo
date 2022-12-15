@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -117,6 +118,20 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                                   ),
                                   child: IconButton(
                                       onPressed: () {
+                                        FirebaseFirestore.instance
+                                            .collection("cart")
+                                            .doc(FirebaseAuth
+                                                .instance.currentUser!.uid)
+                                            .collection("userCart")
+                                            .doc(data["pid"])
+                                            .set({
+                                          "pid": data["pid"],
+                                          "uid": FirebaseAuth
+                                              .instance.currentUser!.uid,
+                                          "pname": data["pname"],
+                                          "price": data["price"],
+                                          "qty": 1,
+                                        });
                                         Fluttertoast.showToast(
                                             msg:
                                                 "Item is added to the cart :)");
