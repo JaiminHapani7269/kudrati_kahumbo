@@ -96,6 +96,19 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                                   width: Dimensions.w50,
                                   child: IconButton(
                                       onPressed: () {
+                                        FirebaseFirestore.instance
+                                            .collection("wishlist")
+                                            .doc(FirebaseAuth
+                                                .instance.currentUser!.uid)
+                                            .collection("userWishlist")
+                                            .doc(data["pid"])
+                                            .set({
+                                          "pid": data["pid"],
+                                          "uid": FirebaseAuth
+                                              .instance.currentUser!.uid,
+                                          "pname": data["pname"],
+                                          "price": data["price"],
+                                        });
                                         Fluttertoast.showToast(
                                             msg:
                                                 "Item is added to your Wishlist :)");

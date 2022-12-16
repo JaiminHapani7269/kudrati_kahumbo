@@ -48,11 +48,15 @@ class CartPage extends StatelessWidget {
                       ),
                     );
                   }
-                  return CartTile(
-                      productId: data["pid"],
-                      productName: data['pname'],
-                      prodcutPrice: data['price'],
-                      qty: data['qty']);
+                  return streamSnapshot.data!.docs.isEmpty
+                      ? const Center(
+                          child: Text("Cart Is Empty !"),
+                        )
+                      : CartTile(
+                          productId: data["pid"],
+                          productName: data['pname'],
+                          prodcutPrice: data['price'],
+                          qty: data['qty']);
                 });
           }),
       bottomNavigationBar: SizedBox(

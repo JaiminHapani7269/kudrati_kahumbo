@@ -26,6 +26,7 @@ class CartTile extends StatefulWidget {
 
 class _CartTileState extends State<CartTile> {
   int quantity = 1;
+
   void qtyFunction() {
     FirebaseFirestore.instance
         .collection("cart")
@@ -35,6 +36,15 @@ class _CartTileState extends State<CartTile> {
         .update({
       "qty": quantity,
     });
+  }
+
+  void deleteCartFunction() {
+    FirebaseFirestore.instance
+        .collection("cart")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("userCart")
+        .doc(widget.productId)
+        .delete();
   }
 
   @override
@@ -90,7 +100,9 @@ class _CartTileState extends State<CartTile> {
                         color: AppColors.mainPurple,
                         minWidth: Dimensions.w40,
                         height: Dimensions.h30,
-                        onPressed: () {},
+                        onPressed: () {
+                          deleteCartFunction();
+                        },
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
                         child: const Icon(
@@ -115,7 +127,7 @@ class _CartTileState extends State<CartTile> {
                                 },
                                 icon: Icons.remove_circle),
                             Text(
-                              "${widget.qty}",
+                              "${widget.qty.toString()}",
                               style: TextStyle(
                                   fontSize: Dimensions.h24,
                                   fontWeight: FontWeight.bold),

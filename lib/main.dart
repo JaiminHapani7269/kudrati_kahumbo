@@ -8,7 +8,7 @@ import 'package:kudrati_kahumbo/screen/auth/otp_screen.dart';
 import 'package:kudrati_kahumbo/screen/home_page.dart';
 import 'package:kudrati_kahumbo/screen/splash_screen.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
-import 'package:kudrati_kahumbo/widgets/cart.dart';
+import 'package:kudrati_kahumbo/screen/cart.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:kudrati_kahumbo/screen/category_product_screen.dart';
+import 'package:kudrati_kahumbo/screen/wishlist_page.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
 import 'package:kudrati_kahumbo/widgets/drawer.dart';
@@ -57,7 +58,11 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined)),
           IconButton(
-              onPressed: () {}, icon: const Icon(Icons.favorite_outline)),
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (builder) => WishListPage()));
+              },
+              icon: const Icon(Icons.favorite_outline)),
           IconButton(
               onPressed: () {
                 Navigator.of(context).pushNamed('cart');
@@ -223,7 +228,7 @@ class _HomePageState extends State<HomePage> {
                                   // overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       color: AppColors.mainPurple,
-                                      fontSize: Dimensions.h20,
+                                      fontSize: Dimensions.h18,
                                       fontWeight: FontWeight.w700),
                                 ),
                                 subtitle: Text(
@@ -244,6 +249,19 @@ class _HomePageState extends State<HomePage> {
                                           width: Dimensions.w50,
                                           child: IconButton(
                                               onPressed: () {
+                                                FirebaseFirestore.instance
+                                                    .collection("wishlist")
+                                                    .doc(FirebaseAuth.instance
+                                                        .currentUser!.uid)
+                                                    .collection("userWishlist")
+                                                    .doc(data["pid"])
+                                                    .set({
+                                                  "pid": data["pid"],
+                                                  "uid": FirebaseAuth.instance
+                                                      .currentUser!.uid,
+                                                  "pname": data["pname"],
+                                                  "price": data["price"],
+                                                });
                                                 Fluttertoast.showToast(
                                                     msg:
                                                         "Item is added to your Wishlist :)");
