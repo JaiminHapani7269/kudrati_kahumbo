@@ -8,8 +8,8 @@ import '../utils/dimensions.dart';
 
 class WishListTile extends StatefulWidget {
   final String pid;
-  final String pname;
-  int price;
+  String pname = '';
+  var price;
   WishListTile({
     Key? key,
     required this.pid,

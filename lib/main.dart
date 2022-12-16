@@ -7,6 +7,7 @@ import 'package:kudrati_kahumbo/screen/auth/regisration_screen.dart';
 import 'package:kudrati_kahumbo/screen/auth/otp_screen.dart';
 import 'package:kudrati_kahumbo/screen/home_page.dart';
 import 'package:kudrati_kahumbo/screen/splash_screen.dart';
+import 'package:kudrati_kahumbo/screen/wishlist_page.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
 import 'package:kudrati_kahumbo/screen/cart.dart';
 
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         'registration': (context) => const RegistrationScreen(),
         'otp': (context) => const OTPScreen(),
         'cart': (context) => const CartPage(),
+        'wishlist': (context) => const WishListPage(),
         // 'product': (context) => const ProductDerailScreen(),
         // 'catproduct': (context) => CategoryProductScreen(),
       },

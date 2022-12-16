@@ -59,8 +59,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined)),
           IconButton(
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (builder) => WishListPage()));
+                Navigator.of(context).pushNamed('wishlist');
               },
               icon: const Icon(Icons.favorite_outline)),
           IconButton(

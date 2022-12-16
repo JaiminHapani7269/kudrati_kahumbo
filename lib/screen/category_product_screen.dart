@@ -41,7 +41,10 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined)),
           IconButton(
-              onPressed: () {}, icon: const Icon(Icons.favorite_outline)),
+              onPressed: () {
+                Navigator.of(context).pushNamed('wishlist');
+              },
+              icon: const Icon(Icons.favorite_outline)),
           IconButton(
               onPressed: () => Navigator.of(context).pushNamed('cart'),
               icon: const Icon(CupertinoIcons.shopping_cart)),

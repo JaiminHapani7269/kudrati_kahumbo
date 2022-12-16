@@ -37,8 +37,6 @@ class WishListPage extends StatelessWidget {
               ));
             }
             return ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
                 physics: const BouncingScrollPhysics(),
                 itemCount: streamSnapshot.data!.docs.length,
                 itemBuilder: (context, index) {
@@ -53,7 +51,7 @@ class WishListPage extends StatelessWidget {
                   return WishListTile(
                     pid: data["pid"],
                     pname: data["pname"],
-                    price: data['price'],
+                    price: data["price"],
                   );
                 });
           }),
