@@ -31,7 +31,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.mainPurple,
         centerTitle: false,
-        elevation: 0,
+        elevation: 5,
         title: SvgPicture.asset(
           "assets/images/Group.svg",
         ),

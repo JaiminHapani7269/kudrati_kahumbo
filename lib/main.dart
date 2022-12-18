@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kudrati_kahumbo/firebase_options.dart';
 import 'package:kudrati_kahumbo/screen/auth/regisration_screen.dart';
 import 'package:kudrati_kahumbo/screen/auth/otp_screen.dart';
+import 'package:kudrati_kahumbo/screen/checkout_page.dart';
 import 'package:kudrati_kahumbo/screen/home_page.dart';
 import 'package:kudrati_kahumbo/screen/splash_screen.dart';
 import 'package:kudrati_kahumbo/screen/wishlist_page.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         'otp': (context) => const OTPScreen(),
         'cart': (context) => const CartPage(),
         'wishlist': (context) => const WishListPage(),
+        'checkout': (context) => const CheckoutPage(),
         // 'product': (context) => const ProductDerailScreen(),
         // 'catproduct': (context) => CategoryProductScreen(),
       },

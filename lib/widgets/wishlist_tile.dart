@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +9,7 @@ import '../utils/dimensions.dart';
 class WishListTile extends StatefulWidget {
   final String pid;
   String pname = '';
+  // ignore: prefer_typing_uninitialized_variables
   var price;
   WishListTile({
     Key? key,
@@ -41,6 +42,14 @@ class _WishListTileState extends State<WishListTile> {
         color: const Color(0xFFECE6E9),
       ),
       child: ListTile(
+        leading: IconButton(
+            onPressed: () {
+              deleteWishlistFunction();
+            },
+            icon: const Icon(
+              Icons.close,
+              color: AppColors.mainPurple,
+            )),
         title: Text(
           widget.pname,
           style: TextStyle(
@@ -59,14 +68,25 @@ class _WishListTileState extends State<WishListTile> {
         trailing: MaterialButton(
           color: AppColors.mainPurple,
           minWidth: Dimensions.w40,
-          height: Dimensions.h30,
+          height: Dimensions.h40,
           onPressed: () {
-            deleteWishlistFunction();
+            FirebaseFirestore.instance
+                .collection("cart")
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection("userCart")
+                .doc(widget.pid)
+                .set({
+              "pid": widget.pid,
+              "uid": FirebaseAuth.instance.currentUser!.uid,
+              "pname": widget.pname,
+              "price": widget.price,
+              "qty": 1,
+            });
           },
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           child: const Icon(
-            Icons.delete,
+            Icons.shopping_cart_outlined,
             color: Colors.white,
           ),
         ),

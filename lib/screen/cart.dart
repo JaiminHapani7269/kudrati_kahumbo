@@ -14,7 +14,7 @@ class CartPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.mainPurple,
-        elevation: 0,
+        elevation: 5,
         centerTitle: true,
         title: const Text(
           "Cart",
@@ -34,34 +34,47 @@ class CartPage extends StatelessWidget {
                 color: AppColors.mainPurple,
               ));
             }
-            return ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                physics: const BouncingScrollPhysics(),
-                itemCount: streamSnapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  var data = streamSnapshot.data!.docs[index];
-                  if (!streamSnapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(
+            return streamSnapshot.data!.docs.isEmpty
+                ? Center(
+                    child: Text(
+                      "Cart Is Empty !",
+                      style: TextStyle(
                         color: AppColors.mainPurple,
+                        fontSize: Dimensions.h18,
+                        fontWeight: FontWeight.w600,
                       ),
-                    );
-                  }
-                  return streamSnapshot.data!.docs.isEmpty
-                      ? const Center(
-                          child: Text("Cart Is Empty !"),
-                        )
-                      : CartTile(
-                          productId: data["pid"],
-                          productName: data['pname'],
-                          prodcutPrice: data['price'],
-                          qty: data['qty']);
-                });
+                    ),
+                  )
+                : ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: streamSnapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      var data = streamSnapshot.data!.docs[index];
+                      if (!streamSnapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.mainPurple,
+                          ),
+                        );
+                      }
+                      return streamSnapshot.data!.docs.isEmpty
+                          ? const Center(
+                              child: Text("Cart Is Empty !"),
+                            )
+                          : CartTile(
+                              productId: data["pid"],
+                              productName: data['pname'],
+                              prodcutPrice: data['price'],
+                              qty: data['qty']);
+                    });
           }),
       bottomNavigationBar: SizedBox(
         child: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).pushNamed('checkout');
+          },
           child: Container(
             margin: EdgeInsets.all(Dimensions.h18),
             height: Dimensions.h55,

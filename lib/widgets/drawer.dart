@@ -1,16 +1,16 @@
+// ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kudrati_kahumbo/helper/helper_function.dart';
-import 'package:kudrati_kahumbo/screen/splash_screen.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomDrawer extends StatefulWidget {
   CustomDrawer({Key? key, required this.userName, required this.mobile})
-      : super(key: key) {}
+      : super(key: key);
   var userName;
   var mobile;
 
@@ -53,14 +53,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       accountName: Text(
                         "${widget.userName}",
                         style: TextStyle(
-                            fontSize: 22,
+                            fontSize: Dimensions.h20,
                             color: AppColors.mainPurple,
                             fontWeight: FontWeight.bold),
                       ),
                       accountEmail: Text(
                         "${widget.mobile}",
                         style: TextStyle(
-                            fontSize: 14,
+                            fontSize: Dimensions.h12,
                             color: AppColors.mainPurple,
                             fontWeight: FontWeight.bold),
                       ),
@@ -86,7 +86,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         style: TextStyle(
                           fontSize: Dimensions.h20,
                         )),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed('wishlist');
+                    },
                     textColor: Colors.white,
                   ),
                   ListTile(
@@ -147,12 +149,44 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           fontSize: Dimensions.h20,
                         )),
                     onTap: () async {
-                      FirebaseAuth.instance.signOut().whenComplete(() async {
-                        await HelperFunction.saveLogingData(false);
-                        // ignore: use_build_context_synchronously
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, "registration", (route) => false);
-                      });
+                      showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text("Logout"),
+                              content: const Text(
+                                  "Are you sure you want to logout?"),
+                              actions: [
+                                IconButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  icon: const Icon(
+                                    Icons.cancel,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.done,
+                                    color: Colors.green,
+                                  ),
+                                  onPressed: () async {
+                                    FirebaseAuth.instance
+                                        .signOut()
+                                        .whenComplete(() async {
+                                      await HelperFunction.saveLogingData(
+                                          false);
+                                      // ignore: use_build_context_synchronously
+                                      Navigator.pushNamedAndRemoveUntil(context,
+                                          "registration", (route) => false);
+                                    });
+                                  },
+                                ),
+                              ],
+                            );
+                          });
                     },
                     textColor: Colors.white,
                   ),

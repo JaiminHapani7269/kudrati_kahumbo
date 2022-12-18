@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:kudrati_kahumbo/widgets/wishlist_tile.dart';
 
 import '../utils/app_colors.dart';
@@ -16,7 +14,7 @@ class WishListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.mainPurple,
-        elevation: 0,
+        elevation: 5,
         centerTitle: true,
         title: const Text(
           "Wishlist",
@@ -36,24 +34,35 @@ class WishListPage extends StatelessWidget {
                 color: AppColors.mainPurple,
               ));
             }
-            return ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: streamSnapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  var data = streamSnapshot.data!.docs[index];
-                  if (!streamSnapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(
+            return streamSnapshot.data!.docs.isNotEmpty
+                ? ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: streamSnapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      var data = streamSnapshot.data!.docs[index];
+                      if (!streamSnapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.mainPurple,
+                          ),
+                        );
+                      }
+                      return WishListTile(
+                        pid: data["pid"],
+                        pname: data["pname"],
+                        price: data["price"],
+                      );
+                    })
+                : Center(
+                    child: Text(
+                      "Wishlist is Empty !",
+                      style: TextStyle(
                         color: AppColors.mainPurple,
+                        fontSize: Dimensions.h18,
+                        fontWeight: FontWeight.w600,
                       ),
-                    );
-                  }
-                  return WishListTile(
-                    pid: data["pid"],
-                    pname: data["pname"],
-                    price: data["price"],
+                    ),
                   );
-                });
           }),
     );
   }

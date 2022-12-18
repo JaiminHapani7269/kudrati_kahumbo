@@ -8,7 +8,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:kudrati_kahumbo/screen/category_product_screen.dart';
-import 'package:kudrati_kahumbo/screen/wishlist_page.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
 import 'package:kudrati_kahumbo/widgets/drawer.dart';
@@ -48,7 +47,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: AppColors.mainPurple,
         centerTitle: false,
-        elevation: 2,
+        elevation: 5,
         title: SvgPicture.asset(
           "assets/images/Group.svg",
         ),
@@ -120,16 +119,15 @@ class _HomePageState extends State<HomePage> {
                   enlargeCenterPage: true,
                   scrollDirection: Axis.horizontal,
                 )),
-            // const SizedBox(height: 10),
             Container(
               alignment: Alignment.bottomLeft,
               padding: EdgeInsets.symmetric(horizontal: Dimensions.w12),
-              child: const Text(
+              child: Text(
                 "Category",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: AppColors.mainPurple,
-                    fontSize: 24),
+                    fontSize: Dimensions.h24),
               ),
             ),
             SizedBox(height: Dimensions.h10),
@@ -224,7 +222,6 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 title: Text(
                                   data["pname"],
-                                  // overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       color: AppColors.mainPurple,
                                       fontSize: Dimensions.h18,

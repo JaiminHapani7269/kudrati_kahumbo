@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable, prefer_typing_uninitialized_variables
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ import '../utils/dimensions.dart';
 
 class CartTile extends StatefulWidget {
   String productName = '';
-  int prodcutPrice;
+  var prodcutPrice;
   int qty;
   final String productId;
   CartTile({
@@ -52,107 +52,77 @@ class _CartTileState extends State<CartTile> {
     return Column(
       children: [
         Container(
-          height: Dimensions.h120,
+          // height: Dimensions.h120,
           width: double.infinity,
-          margin: EdgeInsets.all(Dimensions.w15),
+          margin: EdgeInsets.symmetric(
+              vertical: Dimensions.h10, horizontal: Dimensions.w10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Dimensions.r12),
             color: const Color(0xFFECE6E9),
           ),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: Container(
-                  padding: EdgeInsets.all(Dimensions.h15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        widget.productName,
-                        style: TextStyle(
-                          color: AppColors.mainPurple,
-                          fontSize: Dimensions.h24,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      Text(
-                        "₹.${widget.prodcutPrice} x ${widget.qty} = ₹.${widget.prodcutPrice * widget.qty}",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: Dimensions.h18,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+          child: ListTile(
+            leading: IconButton(
+              onPressed: () {
+                deleteCartFunction();
+              },
+              icon: const Icon(
+                Icons.close,
+                color: AppColors.mainPurple,
               ),
-              Expanded(
-                flex: 2,
-                child: Container(
-                  padding: EdgeInsets.all(Dimensions.h10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      MaterialButton(
-                        color: AppColors.mainPurple,
-                        minWidth: Dimensions.w40,
-                        height: Dimensions.h30,
-                        onPressed: () {
-                          deleteCartFunction();
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: const Icon(
-                          Icons.delete,
-                          color: Colors.white,
-                        ),
-                      ),
-                      SizedBox(
-                        height: Dimensions.h40,
-                        width: Dimensions.w120,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IncrementDecrement(
-                                onPrecced: () {
-                                  setState(() {
-                                    if (quantity > 1) {
-                                      quantity--;
-                                      qtyFunction();
-                                    }
-                                  });
-                                },
-                                icon: Icons.remove_circle),
-                            Text(
-                              "${widget.qty.toString()}",
-                              style: TextStyle(
-                                  fontSize: Dimensions.h24,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            IncrementDecrement(
-                                onPrecced: () {
-                                  setState(() {
-                                    if (quantity < 5) {
-                                      quantity++;
-                                      qtyFunction();
-                                    } else {
-                                      Fluttertoast.showToast(
-                                          msg: "At A time only 5 Item Added");
-                                    }
-                                  });
-                                },
-                                icon: Icons.add_circle),
-                          ],
-                        ),
-                      ),
-                    ],
+            ),
+            title: Text(
+              widget.productName,
+              style: TextStyle(
+                color: AppColors.mainPurple,
+                fontSize: Dimensions.h18,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            subtitle: Text(
+              "₹.${widget.prodcutPrice} x ${widget.qty} = ₹.${widget.prodcutPrice * widget.qty}",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: Dimensions.h15,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            trailing: SizedBox(
+              height: Dimensions.h40,
+              width: Dimensions.w120,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IncrementDecrement(
+                      onPrecced: () {
+                        setState(() {
+                          if (quantity > 1) {
+                            quantity--;
+                            qtyFunction();
+                          }
+                        });
+                      },
+                      icon: Icons.remove_circle),
+                  Text(
+                    "${widget.qty}",
+                    style: TextStyle(
+                        fontSize: Dimensions.h24, fontWeight: FontWeight.bold),
                   ),
-                ),
-              )
-            ],
+                  IncrementDecrement(
+                      onPrecced: () {
+                        setState(() {
+                          if (quantity < 5) {
+                            quantity++;
+                            qtyFunction();
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "At A time only 5 Item Added");
+                          }
+                        });
+                      },
+                      icon: Icons.add_circle),
+                ],
+              ),
+            ),
           ),
         ),
       ],
