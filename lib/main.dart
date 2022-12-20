@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kudrati_kahumbo/firebase_options.dart';
+import 'package:kudrati_kahumbo/provider/cart_provider.dart';
 import 'package:kudrati_kahumbo/screen/auth/regisration_screen.dart';
 import 'package:kudrati_kahumbo/screen/auth/otp_screen.dart';
 import 'package:kudrati_kahumbo/screen/checkout_page.dart';
@@ -11,6 +12,7 @@ import 'package:kudrati_kahumbo/screen/splash_screen.dart';
 import 'package:kudrati_kahumbo/screen/wishlist_page.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
 import 'package:kudrati_kahumbo/screen/cart.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,25 +28,27 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Kudrati Kahumbo',
-      theme: ThemeData(
-        primaryColor: AppColors.mainPurple,
-        textTheme: GoogleFonts.latoTextTheme(textTheme),
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (context) => CartProvider())],
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Kudrati Kahumbo',
+        theme: ThemeData(
+          primaryColor: AppColors.mainPurple,
+          textTheme: GoogleFonts.latoTextTheme(textTheme),
+        ),
+        initialRoute: 'splash',
+        routes: {
+          'splash': (context) => const SplashScreen(),
+          'home': (context) => const HomePage(),
+          'registration': (context) => const RegistrationScreen(),
+          'otp': (context) => const OTPScreen(),
+          'cart': (context) => const CartPage(),
+          'wishlist': (context) => const WishListPage(),
+          // 'product': (context) => const ProductDerailScreen(),
+          // 'catproduct': (context) => CategoryProductScreen(),
+        },
       ),
-      initialRoute: 'splash',
-      routes: {
-        'splash': (context) => const SplashScreen(),
-        'home': (context) => const HomePage(),
-        'registration': (context) => const RegistrationScreen(),
-        'otp': (context) => const OTPScreen(),
-        'cart': (context) => const CartPage(),
-        'wishlist': (context) => const WishListPage(),
-        'checkout': (context) => const CheckoutPage(),
-        // 'product': (context) => const ProductDerailScreen(),
-        // 'catproduct': (context) => CategoryProductScreen(),
-      },
     );
   }
 }

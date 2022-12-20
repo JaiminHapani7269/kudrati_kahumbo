@@ -88,7 +88,7 @@ class _CartTileState extends State<CartTile> {
             ),
             trailing: SizedBox(
               height: Dimensions.h40,
-              width: Dimensions.w120,
+              width: Dimensions.h110,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -105,7 +105,7 @@ class _CartTileState extends State<CartTile> {
                   Text(
                     "${widget.qty}",
                     style: TextStyle(
-                        fontSize: Dimensions.h24, fontWeight: FontWeight.bold),
+                        fontSize: Dimensions.h20, fontWeight: FontWeight.bold),
                   ),
                   IncrementDecrement(
                       onPrecced: () {

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../utils/app_colors.dart';
 import '../utils/dimensions.dart';
@@ -88,7 +89,7 @@ class CheckoutPage extends StatelessWidget {
                     ),
                   ),
                   trailing: Text(
-                    "\$120",
+                    "₹.120",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: Dimensions.h15,
@@ -146,7 +147,7 @@ class CheckoutPage extends StatelessWidget {
                     ),
                   ),
                   trailing: Text(
-                    "\$120",
+                    "₹.120",
                     style: TextStyle(
                       color: AppColors.mainPurple,
                       fontSize: Dimensions.h18,
@@ -154,33 +155,35 @@ class CheckoutPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(
+                  child: GestureDetector(
+                    onTap: () {
+                      Fluttertoast.showToast(msg: "Plz Wait for few days.");
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(Dimensions.h18),
+                      height: Dimensions.h55,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: AppColors.mainPurple,
+                          borderRadius: BorderRadius.circular(Dimensions.r20)),
+                      child: Center(
+                        child: Text(
+                          "Buy",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: Dimensions.h20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: SizedBox(
-        child: GestureDetector(
-          onTap: () {},
-          child: Container(
-            margin: EdgeInsets.all(Dimensions.h18),
-            height: Dimensions.h55,
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: AppColors.mainPurple,
-                borderRadius: BorderRadius.circular(Dimensions.r20)),
-            child: Center(
-              child: Text(
-                "Buy",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: Dimensions.h20,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
-        ),
       ),
     );
   }
