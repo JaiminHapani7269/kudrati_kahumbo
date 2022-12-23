@@ -4,9 +4,9 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kudrati_kahumbo/firebase_options.dart';
 import 'package:kudrati_kahumbo/provider/cart_provider.dart';
+import 'package:kudrati_kahumbo/provider/wishlist_provider.dart';
 import 'package:kudrati_kahumbo/screen/auth/regisration_screen.dart';
 import 'package:kudrati_kahumbo/screen/auth/otp_screen.dart';
-import 'package:kudrati_kahumbo/screen/checkout_page.dart';
 import 'package:kudrati_kahumbo/screen/home_page.dart';
 import 'package:kudrati_kahumbo/screen/splash_screen.dart';
 import 'package:kudrati_kahumbo/screen/wishlist_page.dart';
@@ -29,7 +29,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (context) => CartProvider())],
+      providers: [
+        ChangeNotifierProvider(create: (context) => WishListProvider()),
+        ChangeNotifierProvider(create: (context) => CartProvider()),
+      ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Kudrati Kahumbo',
@@ -45,8 +48,6 @@ class MyApp extends StatelessWidget {
           'otp': (context) => const OTPScreen(),
           'cart': (context) => const CartPage(),
           'wishlist': (context) => const WishListPage(),
-          // 'product': (context) => const ProductDerailScreen(),
-          // 'catproduct': (context) => CategoryProductScreen(),
         },
       ),
     );

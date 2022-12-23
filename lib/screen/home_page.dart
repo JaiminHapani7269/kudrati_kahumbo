@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:kudrati_kahumbo/screen/category_product_screen.dart';
+import 'package:kudrati_kahumbo/screen/search_page.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
 import 'package:kudrati_kahumbo/widgets/drawer.dart';
@@ -55,7 +56,14 @@ class _HomePageState extends State<HomePage> {
             onPressed: () => scaffoldKey.currentState!.openDrawer(),
             icon: const Icon(CupertinoIcons.square_grid_2x2)),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined)),
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SearchPage()),
+                );
+              },
+              icon: const Icon(Icons.search_outlined)),
           IconButton(
               onPressed: () {
                 Navigator.of(context).pushNamed('wishlist');

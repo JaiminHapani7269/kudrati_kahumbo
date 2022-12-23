@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:kudrati_kahumbo/screen/search_page.dart';
 import '../utils/app_colors.dart';
 import '../utils/dimensions.dart';
 
@@ -39,7 +39,14 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
             onPressed: () => Navigator.pop(context),
             icon: const Icon(Icons.arrow_back_ios)),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined)),
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SearchPage()),
+                );
+              },
+              icon: const Icon(Icons.search_outlined)),
           IconButton(
               onPressed: () {
                 Navigator.of(context).pushNamed('wishlist');
@@ -84,7 +91,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                           data["pname"],
                           style: TextStyle(
                             color: AppColors.mainPurple,
-                            fontSize: Dimensions.h24,
+                            fontSize: Dimensions.h18,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -163,9 +170,9 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                           padding: EdgeInsets.only(top: Dimensions.h10),
                           child: Text(
                             "₹.${data["price"]}",
-                            style: const TextStyle(
+                            style: TextStyle(
                               color: Colors.black,
-                              fontSize: 24,
+                              fontSize: Dimensions.h15,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
