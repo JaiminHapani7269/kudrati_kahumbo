@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:kudrati_kahumbo/screen/category_product_screen.dart';
+import 'package:kudrati_kahumbo/screen/home_page.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
 
@@ -14,7 +16,10 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   String query = "";
+  String queryCat = "";
   var result;
+  var resultCat;
+  //for popular product
   searchFunction(query, searchList) {
     result = searchList.where((ele) {
       return ele["pname"].toLowerCase().contains(query) ||
@@ -23,6 +28,17 @@ class _SearchPageState extends State<SearchPage> {
               ele["pname"].toUpperCase().contains(query);
     }).toList();
     return result;
+  }
+
+  //for category
+  searchCategoryFunction(queryCat, searchList) {
+    resultCat = searchList.where((ele) {
+      return ele["cname"].toLowerCase().contains(query) ||
+          ele["cname"].toUpperCase().contains(query) ||
+          ele["cname"].toLowerCase().contains(query) &&
+              ele["cname"].toUpperCase().contains(query);
+    }).toList();
+    return resultCat;
   }
 
   @override
@@ -41,6 +57,7 @@ class _SearchPageState extends State<SearchPage> {
                     onChanged: (val) {
                       setState(() {
                         query = val;
+                        queryCat = val;
                       });
                     },
                     enabled: true,
@@ -85,10 +102,61 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                 ),
                 SizedBox(height: Dimensions.h10),
-                query == ""
+                queryCat == ""
                     ? Center(
                         child: Text(
                           'Search Here..',
+                          style: TextStyle(
+                              color: AppColors.mainPurple,
+                              fontSize: Dimensions.h18),
+                        ),
+                      )
+                    : SizedBox(
+                        height: Dimensions.h100,
+                        child: StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection("category")
+                                .orderBy("cid", descending: false)
+                                .snapshots(),
+                            builder: (context,
+                                AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                              if (!streamSnapshot.hasData) {
+                                return const Center(
+                                    child: CircularProgressIndicator(
+                                  color: AppColors.mainPurple,
+                                ));
+                              }
+                              var varData = searchCategoryFunction(
+                                  queryCat, streamSnapshot.data!.docs);
+                              return ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  physics: const BouncingScrollPhysics(),
+                                  itemCount: resultCat.length,
+                                  itemBuilder: (context, index) {
+                                    var data = varData[index];
+                                    return Category(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      CategoryProductScreen(
+                                                          id: streamSnapshot
+                                                              .data!
+                                                              .docs[index]
+                                                              .id,
+                                                          collection:
+                                                              data["cname"])));
+                                        },
+                                        icon: data["icon"],
+                                        cname: data["cname"]);
+                                  });
+                            }),
+                      ),
+                query == ""
+                    ? Center(
+                        child: Text(
+                          '',
                           style: TextStyle(
                               color: AppColors.mainPurple,
                               fontSize: Dimensions.h18),
