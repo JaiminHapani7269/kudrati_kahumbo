@@ -58,7 +58,7 @@ class _WishListTileState extends State<WishListTile> {
               fontWeight: FontWeight.w700),
         ),
         subtitle: Text(
-          "₹.${widget.price}",
+          "₹ ${widget.price}",
           style: TextStyle(
             color: Colors.black,
             fontSize: Dimensions.h18,

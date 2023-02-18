@@ -1,11 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kudrati_kahumbo/screen/search_page.dart';
+import 'package:kudrati_kahumbo/widgets/single_product.dart';
 import '../utils/app_colors.dart';
 import '../utils/dimensions.dart';
 
@@ -78,107 +77,10 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   var data = snapshot.data!.docs[index];
-                  return Padding(
-                    padding: EdgeInsets.all(Dimensions.h5),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: Dimensions.w10, vertical: Dimensions.h5),
-                      decoration: BoxDecoration(
-                          color: const Color(0xFFECE6E9),
-                          borderRadius: BorderRadius.circular(Dimensions.r12)),
-                      child: ListTile(
-                        title: Text(
-                          data["pname"],
-                          style: TextStyle(
-                            color: AppColors.mainPurple,
-                            fontSize: Dimensions.h18,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        trailing: Container(
-                          height: Dimensions.h80,
-                          width: Dimensions.w120,
-                          padding: EdgeInsets.only(left: Dimensions.w12),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                  height: Dimensions.h50,
-                                  width: Dimensions.w50,
-                                  child: IconButton(
-                                      onPressed: () {
-                                        FirebaseFirestore.instance
-                                            .collection("wishlist")
-                                            .doc(FirebaseAuth
-                                                .instance.currentUser!.uid)
-                                            .collection("userWishlist")
-                                            .doc(data["pid"])
-                                            .set({
-                                          "pid": data["pid"],
-                                          "uid": FirebaseAuth
-                                              .instance.currentUser!.uid,
-                                          "pname": data["pname"],
-                                          "price": data["price"],
-                                        });
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "Item is added to your Wishlist :)");
-                                      },
-                                      icon: const Icon(
-                                        Icons.favorite_border_outlined,
-                                        color: AppColors.mainPurple,
-                                      ))),
-                              SizedBox(width: Dimensions.w5),
-                              Container(
-                                  height: Dimensions.h50,
-                                  width: Dimensions.w50,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(Dimensions.r12),
-                                    gradient: LinearGradient(colors: [
-                                      Colors.black.withOpacity(0.6),
-                                      AppColors.mainPurple,
-                                    ]),
-                                  ),
-                                  child: IconButton(
-                                      onPressed: () {
-                                        FirebaseFirestore.instance
-                                            .collection("cart")
-                                            .doc(FirebaseAuth
-                                                .instance.currentUser!.uid)
-                                            .collection("userCart")
-                                            .doc(data["pid"])
-                                            .set({
-                                          "pid": data["pid"],
-                                          "uid": FirebaseAuth
-                                              .instance.currentUser!.uid,
-                                          "pname": data["pname"],
-                                          "price": data["price"],
-                                          "qty": 1,
-                                        });
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                "Item is added to the cart :)");
-                                      },
-                                      icon: const Icon(
-                                        Icons.shopping_cart_outlined,
-                                        color: Colors.white,
-                                      ))),
-                            ],
-                          ),
-                        ),
-                        subtitle: Padding(
-                          padding: EdgeInsets.only(top: Dimensions.h10),
-                          child: Text(
-                            "₹.${data["price"]}",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: Dimensions.h15,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                  return SingleProductTile(
+                    pid: data['pid'],
+                    pname: data['pname'],
+                    price: data['price'],
                   );
                 });
           },

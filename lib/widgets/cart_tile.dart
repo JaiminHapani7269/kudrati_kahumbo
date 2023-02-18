@@ -79,7 +79,7 @@ class _CartTileState extends State<CartTile> {
               ),
             ),
             subtitle: Text(
-              "₹.${widget.prodcutPrice} x ${widget.qty} = ₹.${widget.prodcutPrice * widget.qty}",
+              "₹ ${widget.prodcutPrice} x ${widget.qty} = ₹ ${widget.prodcutPrice * widget.qty}",
               style: TextStyle(
                 color: Colors.black,
                 fontSize: Dimensions.h15,

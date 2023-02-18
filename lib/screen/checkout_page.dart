@@ -1,17 +1,47 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:kudrati_kahumbo/utils/dimensions.dart';
+import 'package:kudrati_kahumbo/widgets/order_summery.dart';
+import 'package:provider/provider.dart';
 
-import '../utils/app_colors.dart';
-import '../utils/dimensions.dart';
-import '../widgets/cart_tile.dart';
+import 'package:kudrati_kahumbo/provider/cart_provider.dart';
+import 'package:kudrati_kahumbo/utils/app_colors.dart';
 
-class CheckoutPage extends StatelessWidget {
-  const CheckoutPage({super.key});
+class CheckoutPage extends StatefulWidget {
+  CheckoutPage({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<CheckoutPage> createState() => _CheckoutPageState();
+}
+
+class _CheckoutPageState extends State<CheckoutPage> {
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController hnoController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+  TextEditingController areaController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController stateController = TextEditingController();
+  TextEditingController pincodeController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+    cartProvider.getCartData();
+    int totalAmount = cartProvider.totalAmount();
+    if (cartProvider.getCartList.isEmpty) {
+      setState(() {
+        totalAmount = 0;
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.mainPurple,
@@ -22,169 +52,286 @@ class CheckoutPage extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
         ),
       ),
-      body: Column(
-        children: [
-          Flexible(
-            child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection("cart")
-                    .doc(FirebaseAuth.instance.currentUser!.uid)
-                    .collection("userCart")
-                    .snapshots(),
-                builder:
-                    (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
-                  if (!streamSnapshot.hasData) {
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      color: AppColors.mainPurple,
-                    ));
-                  }
-                  return streamSnapshot.data!.docs.isEmpty
-                      ? Center(
-                          child: Text(
-                            "Cart Is Empty !",
-                            style: TextStyle(
-                              color: AppColors.mainPurple,
-                              fontSize: Dimensions.h18,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        )
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: streamSnapshot.data!.docs.length,
-                          itemBuilder: (context, index) {
-                            var data = streamSnapshot.data!.docs[index];
-                            if (!streamSnapshot.hasData) {
-                              return const Center(
-                                child: CircularProgressIndicator(
-                                  color: AppColors.mainPurple,
-                                ),
-                              );
-                            }
-                            return streamSnapshot.data!.docs.isEmpty
-                                ? const Center(
-                                    child: Text("Cart Is Empty !"),
-                                  )
-                                : CartTile(
-                                    productId: data["pid"],
-                                    productName: data['pname'],
-                                    prodcutPrice: data['price'],
-                                    qty: data['qty']);
-                          });
-                }),
-          ),
-          Flexible(
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(Dimensions.w20),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ListTile(
-                  title: Text(
-                    "Sub Total:",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: Dimensions.h15,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  trailing: Text(
-                    "₹.120",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: Dimensions.h15,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                ListTile(
-                  title: Text(
-                    "Discount:",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: Dimensions.h15,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  trailing: Text(
-                    "0%",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: Dimensions.h15,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                ListTile(
-                  title: Text(
-                    "Shipping Fee:",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: Dimensions.h15,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  trailing: Text(
-                    "Free",
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontSize: Dimensions.h15,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                const Divider(
-                  thickness: 3,
-                  color: Colors.black54,
-                ),
-                ListTile(
-                  title: Text(
-                    "Total:",
-                    style: TextStyle(
+                Text(
+                  'Customer Information:',
+                  style: TextStyle(
                       color: AppColors.mainPurple,
-                      fontSize: Dimensions.h18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  trailing: Text(
-                    "₹.120",
-                    style: TextStyle(
-                      color: AppColors.mainPurple,
-                      fontSize: Dimensions.h18,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                      fontSize: Dimensions.h24,
+                      fontWeight: FontWeight.w500),
                 ),
-                SizedBox(
-                  child: GestureDetector(
-                    onTap: () {
-                      Fluttertoast.showToast(msg: "Plz Wait for few days.");
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.h5, vertical: Dimensions.w10),
+                  child: TextFormField(
+                    controller: nameController,
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.name,
+                    onSaved: (newValue) => nameController.text = newValue!,
+                    validator: (value) {
+                      if (nameController.text.isEmpty) {
+                        return "Please Enter Your Name";
+                      }
+                      return null;
                     },
-                    child: Container(
-                      margin: EdgeInsets.all(Dimensions.h18),
-                      height: Dimensions.h55,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: AppColors.mainPurple,
-                          borderRadius: BorderRadius.circular(Dimensions.r20)),
-                      child: Center(
-                        child: Text(
-                          "Buy",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: Dimensions.h20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                    decoration: const InputDecoration(
+                      labelText: 'Customer Name',
+                      labelStyle: TextStyle(
+                        color: AppColors.mainPurple,
                       ),
                     ),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.h5, vertical: Dimensions.w10),
+                  child: TextFormField(
+                    controller: phoneController,
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.number,
+                    onSaved: (newValue) => phoneController.text = newValue!,
+                    validator: (value) {
+                      if (nameController.text.isEmpty) {
+                        return "Please Enter Your Number";
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Mobile Number',
+                      labelStyle: TextStyle(
+                        color: AppColors.mainPurple,
+                      ),
+                    ),
+                  ),
+                ),
+                Text(
+                  'Address Information:',
+                  style: TextStyle(
+                      color: AppColors.mainPurple,
+                      fontSize: Dimensions.h24,
+                      fontWeight: FontWeight.w500),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Dimensions.h5,
+                            vertical: Dimensions.w10),
+                        child: TextFormField(
+                          controller: hnoController,
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.text,
+                          onSaved: (newValue) => hnoController.text = newValue!,
+                          validator: (value) {
+                            if (hnoController.text.isEmpty) {
+                              return "Please House No.";
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                            labelText: 'House No.',
+                            labelStyle: TextStyle(
+                              color: AppColors.mainPurple,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Dimensions.h5,
+                            vertical: Dimensions.w10),
+                        child: TextFormField(
+                          controller: addressController,
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.streetAddress,
+                          onSaved: (newValue) =>
+                              addressController.text = newValue!,
+                          validator: (value) {
+                            if (addressController.text.isEmpty) {
+                              return "Please Enter Adrress";
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                            labelText: 'Address',
+                            labelStyle: TextStyle(
+                              color: AppColors.mainPurple,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.h5, vertical: Dimensions.w10),
+                  child: TextFormField(
+                    controller: areaController,
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.text,
+                    onSaved: (newValue) => areaController.text = newValue!,
+                    validator: (value) {
+                      if (areaController.text.isEmpty) {
+                        return "Please Enter Your Area Name";
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Area Name',
+                      labelStyle: TextStyle(
+                        color: AppColors.mainPurple,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.h5, vertical: Dimensions.w10),
+                  child: TextFormField(
+                    controller: cityController,
+                    textInputAction: TextInputAction.next,
+                    keyboardType: TextInputType.text,
+                    onSaved: (newValue) => cityController.text = newValue!,
+                    validator: (value) {
+                      if (cityController.text.isEmpty) {
+                        return "Please Enter Your City";
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'City',
+                      labelStyle: TextStyle(
+                        color: AppColors.mainPurple,
+                      ),
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Dimensions.h5,
+                            vertical: Dimensions.w10),
+                        child: TextFormField(
+                          controller: stateController,
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.text,
+                          onSaved: (newValue) =>
+                              stateController.text = newValue!,
+                          validator: (value) {
+                            if (stateController.text.isEmpty) {
+                              return "Please Enter State";
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                            labelText: 'State',
+                            labelStyle: TextStyle(
+                              color: AppColors.mainPurple,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Dimensions.h5,
+                            vertical: Dimensions.w10),
+                        child: TextFormField(
+                          controller: pincodeController,
+                          textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.number,
+                          onSaved: (newValue) =>
+                              pincodeController.text = newValue!,
+                          validator: (value) {
+                            if (pincodeController.text.isEmpty) {
+                              return "Please Enter Pincode";
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                            labelText: 'Pincode',
+                            labelStyle: TextStyle(
+                              color: AppColors.mainPurple,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  'Order Summary:',
+                  style: TextStyle(
+                      color: AppColors.mainPurple,
+                      fontSize: Dimensions.h24,
+                      fontWeight: FontWeight.w500),
+                ),
+                const OrderSummary(),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.mainPurple,
+                    ),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        FirebaseFirestore.instance
+                            .collection("order")
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .collection("userOrder")
+                            .doc(phoneController.text)
+                            .set({
+                          'cid': FirebaseAuth.instance.currentUser!.uid,
+                          'cname': nameController.text,
+                          'phone': phoneController.text,
+                          'houseNo': hnoController.text,
+                          'address': addressController.text,
+                          'area': areaController.text,
+                          'city': cityController.text,
+                          'state': stateController.text,
+                          'pincode': pincodeController.text,
+                          'products': ["Jamun shot -- 2", "Apple shot -- 3"],
+                          'total': totalAmount,
+                          'date': DateTime.now(),
+                          'orderStatus': 'placed',
+                        }).whenComplete(() => print("done"));
+                      }
+                    },
+                    child: const Text("Order Now")),
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    nameController.dispose();
+    phoneController.dispose();
+    hnoController.dispose();
+    addressController.dispose();
+    areaController.dispose();
+    cityController.dispose();
+    stateController.dispose();
+    pincodeController.dispose();
   }
 }

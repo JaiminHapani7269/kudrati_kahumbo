@@ -1,9 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:ffi';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:kudrati_kahumbo/model/user_model.dart';
 import 'package:kudrati_kahumbo/provider/cart_provider.dart';
+import 'package:kudrati_kahumbo/screen/checkout_page.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
 import 'package:kudrati_kahumbo/widgets/cart_tile.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +32,7 @@ class _CartPageState extends State<CartPage> {
         totalAmount = 0;
       });
     }
+    List products = [];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.mainPurple,
@@ -52,6 +58,9 @@ class _CartPageState extends State<CartPage> {
               itemCount: cartProvider.getCartList.length,
               itemBuilder: (context, index) {
                 var data = cartProvider.cartList[index];
+
+                products.add("${data.pname} -- ${data.qty}");
+
                 return CartTile(
                     productId: data.pid,
                     productName: data.pname,
@@ -80,7 +89,7 @@ class _CartPageState extends State<CartPage> {
                 ),
               ),
               trailing: Text(
-                "₹.${totalAmount}",
+                "₹ $totalAmount",
                 style: TextStyle(
                   color: AppColors.mainPurple,
                   fontSize: Dimensions.h20,
@@ -90,7 +99,24 @@ class _CartPageState extends State<CartPage> {
             ),
             SizedBox(
               child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  print(products);
+                  // FirebaseFirestore.instance
+                  //     .collection("order")
+                  //     .doc(FirebaseAuth.instance.currentUser!.uid)
+                  //     .collection("userOrder")
+                  //     .doc(loggedInUser.mobile)
+                  //     .set({
+                  //   "name": loggedInUser.c_name,
+                  //   "total": totalAmount,
+                  //   "product": ["jamun -- 2", "apple -- 3"],
+                  //   "date": DateTime.now(),
+                  // }).whenComplete(() => Navigator.of(context).push(
+                  //         MaterialPageRoute(
+                  //             builder: (context) => CheckoutPage())));
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => CheckoutPage()));
+                },
                 child: Container(
                   margin: EdgeInsets.all(Dimensions.h18),
                   height: Dimensions.h55,

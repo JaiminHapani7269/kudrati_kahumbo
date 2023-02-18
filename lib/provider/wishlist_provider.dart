@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 class WishListProvider with ChangeNotifier {
@@ -7,6 +6,7 @@ class WishListProvider with ChangeNotifier {
     required pid,
     required uid,
     required pname,
+    required fav,
     required price,
   }) {
     FirebaseFirestore.instance
@@ -19,6 +19,7 @@ class WishListProvider with ChangeNotifier {
       "uid": pid,
       "pname": pname,
       "price": price,
+      "fav": true
     });
   }
 }

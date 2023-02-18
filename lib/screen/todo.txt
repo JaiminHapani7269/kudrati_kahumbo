@@ -64,4 +64,35 @@ NeverScrollableScrollPhysics()
 
 
 
-          
+          resultCat.isEmpty
+                                  ? Center(
+                                      child: Text(
+                                        "$queryCat is not in categories",
+                                        style: TextStyle(
+                                            color: AppColors.mainPurple,
+                                            fontSize: Dimensions.h18),
+                                      ),
+                                    )
+                                  : 
+
+
+FirebaseFirestore.instance
+                          .collection("order")
+                          .doc(FirebaseAuth.instance.currentUser!.uid)
+                          .collection("userOrder")
+                          .doc(phone)
+                          .set({
+                        'cid': FirebaseAuth.instance.currentUser!.uid,
+                        'cname': name,
+                        'phone': phone,
+                        'houseNo': hno,
+                        'address': address,
+                        'areaName': areaname,
+                        'city': city,
+                        'state': state,
+                        'pincode': pincode,
+                        'products': ["Jamun shot -- 2", "Apple shot -- 3"],
+                        'total': totalAmount,
+                        'date': DateTime.now(),
+                        'orderStatus': 'placed',
+                      });
