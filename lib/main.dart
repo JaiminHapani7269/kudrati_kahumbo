@@ -8,6 +8,9 @@ import 'package:kudrati_kahumbo/provider/wishlist_provider.dart';
 import 'package:kudrati_kahumbo/screen/auth/regisration_screen.dart';
 import 'package:kudrati_kahumbo/screen/auth/otp_screen.dart';
 import 'package:kudrati_kahumbo/screen/home_page.dart';
+import 'package:kudrati_kahumbo/screen/my_order_page.dart';
+import 'package:kudrati_kahumbo/screen/order_done_page.dart';
+import 'package:kudrati_kahumbo/screen/payment_page.dart';
 import 'package:kudrati_kahumbo/screen/splash_screen.dart';
 import 'package:kudrati_kahumbo/screen/wishlist_page.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
@@ -48,6 +51,9 @@ class MyApp extends StatelessWidget {
           'otp': (context) => const OTPScreen(),
           'cart': (context) => const CartPage(),
           'wishlist': (context) => const WishListPage(),
+          'payment': (context) => const PaymentPage(),
+          'orderDone': (context) => const OrderDonePage(),
+          'myOrder': (context) => const MyOrderPage(),
         },
       ),
     );

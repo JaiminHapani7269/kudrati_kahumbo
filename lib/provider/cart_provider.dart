@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:kudrati_kahumbo/model/cart_model.dart';
 
 class CartProvider with ChangeNotifier {
-  List<String> CartProduct = [];
   List<CartModel> cartList = [];
   CartModel? cartModel;
   Future getCartData() async {

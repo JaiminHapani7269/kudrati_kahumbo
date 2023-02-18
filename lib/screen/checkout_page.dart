@@ -4,16 +4,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:kudrati_kahumbo/utils/dimensions.dart';
-import 'package:kudrati_kahumbo/widgets/order_summery.dart';
 import 'package:provider/provider.dart';
-
+import 'dart:math';
 import 'package:kudrati_kahumbo/provider/cart_provider.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
+import 'package:kudrati_kahumbo/utils/dimensions.dart';
+import 'package:kudrati_kahumbo/widgets/order_summery.dart';
 
 class CheckoutPage extends StatefulWidget {
+  String productList;
   CheckoutPage({
     Key? key,
+    required this.productList,
   }) : super(key: key);
 
   @override
@@ -30,6 +32,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
   TextEditingController cityController = TextEditingController();
   TextEditingController stateController = TextEditingController();
   TextEditingController pincodeController = TextEditingController();
+  var random = Random();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
         totalAmount = 0;
       });
     }
-
+    String oid = '#${random.nextInt(900000) + 100000}';
+    final date = DateTime.now();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.mainPurple,
@@ -285,35 +289,40 @@ class _CheckoutPageState extends State<CheckoutPage> {
                       fontWeight: FontWeight.w500),
                 ),
                 const OrderSummary(),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.mainPurple,
-                    ),
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        FirebaseFirestore.instance
-                            .collection("order")
-                            .doc(FirebaseAuth.instance.currentUser!.uid)
-                            .collection("userOrder")
-                            .doc(phoneController.text)
-                            .set({
-                          'cid': FirebaseAuth.instance.currentUser!.uid,
-                          'cname': nameController.text,
-                          'phone': phoneController.text,
-                          'houseNo': hnoController.text,
-                          'address': addressController.text,
-                          'area': areaController.text,
-                          'city': cityController.text,
-                          'state': stateController.text,
-                          'pincode': pincodeController.text,
-                          'products': ["Jamun shot -- 2", "Apple shot -- 3"],
-                          'total': totalAmount,
-                          'date': DateTime.now(),
-                          'orderStatus': 'placed',
-                        }).whenComplete(() => print("done"));
-                      }
-                    },
-                    child: const Text("Order Now")),
+                SizedBox(
+                  height: Dimensions.h50,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.mainPurple,
+                      ),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          FirebaseFirestore.instance
+                              .collection("order")
+                              .doc()
+                              .set({
+                            'oid': oid,
+                            'cid': FirebaseAuth.instance.currentUser!.uid,
+                            'cname': nameController.text,
+                            'phone': phoneController.text,
+                            'houseNo': hnoController.text,
+                            'address': addressController.text,
+                            'area': areaController.text,
+                            'city': cityController.text,
+                            'state': stateController.text,
+                            'pincode': pincodeController.text,
+                            'products': widget.productList,
+                            'total': totalAmount,
+                            'date':
+                                "${date.day}/${date.month}/${date.year} -- ${date.hour}:${date.minute}",
+                            'orderStatus': 'placed',
+                          }).whenComplete(() => Navigator.of(context)
+                                  .pushReplacementNamed('payment'));
+                        }
+                      },
+                      child: const Text("Order Now")),
+                ),
               ],
             ),
           ),

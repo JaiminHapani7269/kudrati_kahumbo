@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kudrati_kahumbo/helper/helper_function.dart';
+import 'package:kudrati_kahumbo/screen/payment_page.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
 
@@ -77,7 +78,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         style: TextStyle(
                           fontSize: Dimensions.h20,
                         )),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed('myOrder');
+                    },
                     textColor: Colors.white,
                   ),
                   ListTile(
@@ -98,7 +101,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         style: TextStyle(
                           fontSize: Dimensions.h20,
                         )),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => PaymentPage()));
+                    },
                     textColor: Colors.white,
                   ),
                   ListTile(

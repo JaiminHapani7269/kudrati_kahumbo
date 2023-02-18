@@ -33,6 +33,7 @@ class _CartPageState extends State<CartPage> {
       });
     }
     List products = [];
+    String productList = '';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.mainPurple,
@@ -100,22 +101,18 @@ class _CartPageState extends State<CartPage> {
             SizedBox(
               child: GestureDetector(
                 onTap: () {
-                  print(products);
-                  // FirebaseFirestore.instance
-                  //     .collection("order")
-                  //     .doc(FirebaseAuth.instance.currentUser!.uid)
-                  //     .collection("userOrder")
-                  //     .doc(loggedInUser.mobile)
-                  //     .set({
-                  //   "name": loggedInUser.c_name,
-                  //   "total": totalAmount,
-                  //   "product": ["jamun -- 2", "apple -- 3"],
-                  //   "date": DateTime.now(),
-                  // }).whenComplete(() => Navigator.of(context).push(
-                  //         MaterialPageRoute(
-                  //             builder: (context) => CheckoutPage())));
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => CheckoutPage()));
+                  setState(() {
+                    productList = products.toString();
+                  });
+                  print(productList);
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(
+                          builder: (context) => CheckoutPage(
+                                productList: productList,
+                              )))
+                      .whenComplete(() {
+                    products.clear();
+                  });
                 },
                 child: Container(
                   margin: EdgeInsets.all(Dimensions.h18),
