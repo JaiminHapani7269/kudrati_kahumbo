@@ -24,6 +24,7 @@ class MyOrderPage extends StatelessWidget {
           stream: FirebaseFirestore.instance
               .collection('order')
               .where('cid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+              .orderBy('date', descending: false)
               .snapshots(),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
             return ListView.builder(
