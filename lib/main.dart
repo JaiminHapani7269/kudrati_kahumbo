@@ -8,7 +8,6 @@ import 'package:kudrati_kahumbo/provider/wishlist_provider.dart';
 import 'package:kudrati_kahumbo/screen/about_us_page.dart';
 import 'package:kudrati_kahumbo/screen/auth/regisration_screen.dart';
 import 'package:kudrati_kahumbo/screen/auth/otp_screen.dart';
-import 'package:kudrati_kahumbo/screen/city_branch.dart';
 import 'package:kudrati_kahumbo/screen/contact_us_page.dart';
 import 'package:kudrati_kahumbo/screen/feedback_page.dart';
 import 'package:kudrati_kahumbo/screen/home_page.dart';
