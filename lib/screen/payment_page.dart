@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-
 import '../utils/app_colors.dart';
 import '../utils/dimensions.dart';
 
@@ -21,7 +18,7 @@ class PaymentPage extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: Text("QR Code"),
+        child: Image.asset('assets/images/qr.jpeg'),
       ),
       bottomNavigationBar: Container(
         height: 90,

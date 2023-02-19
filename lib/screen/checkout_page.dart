@@ -1,9 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
 import 'package:kudrati_kahumbo/provider/cart_provider.dart';
@@ -300,7 +298,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         if (_formKey.currentState!.validate()) {
                           FirebaseFirestore.instance
                               .collection("order")
-                              .doc()
+                              .doc(oid)
                               .set({
                             'oid': oid,
                             'cid': FirebaseAuth.instance.currentUser!.uid,

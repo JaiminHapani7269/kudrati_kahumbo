@@ -1,12 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:kudrati_kahumbo/model/user_model.dart';
 import 'package:kudrati_kahumbo/provider/cart_provider.dart';
 import 'package:kudrati_kahumbo/screen/checkout_page.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
@@ -104,7 +98,6 @@ class _CartPageState extends State<CartPage> {
                   setState(() {
                     productList = products.toString();
                   });
-                  print(productList);
                   Navigator.of(context)
                       .push(MaterialPageRoute(
                           builder: (context) => CheckoutPage(

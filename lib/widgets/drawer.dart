@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kudrati_kahumbo/helper/helper_function.dart';
-import 'package:kudrati_kahumbo/screen/payment_page.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
 
@@ -94,37 +93,28 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     },
                     textColor: Colors.white,
                   ),
+                  // ListTile(
+                  //   leading: const Icon(CupertinoIcons.arrow_branch,
+                  //       color: Colors.white),
+                  //   title: Text("Branches",
+                  //       style: TextStyle(
+                  //         fontSize: Dimensions.h20,
+                  //       )),
+                  //   onTap: () {
+                  //     Navigator.of(context).pushNamed('branch');
+                  //   },
+                  //   textColor: Colors.white,
+                  // ),
                   ListTile(
-                    leading: const Icon(CupertinoIcons.list_bullet,
+                    leading: const Icon(CupertinoIcons.chat_bubble,
                         color: Colors.white),
-                    title: Text("Menu",
+                    title: Text("Feedback",
                         style: TextStyle(
                           fontSize: Dimensions.h20,
                         )),
                     onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => PaymentPage()));
+                      Navigator.of(context).pushNamed('feedback');
                     },
-                    textColor: Colors.white,
-                  ),
-                  ListTile(
-                    leading: const Icon(CupertinoIcons.arrow_branch,
-                        color: Colors.white),
-                    title: Text("Branches",
-                        style: TextStyle(
-                          fontSize: Dimensions.h20,
-                        )),
-                    onTap: () {},
-                    textColor: Colors.white,
-                  ),
-                  ListTile(
-                    leading:
-                        const Icon(Icons.shop_2_outlined, color: Colors.white),
-                    title: Text("Frenchise",
-                        style: TextStyle(
-                          fontSize: Dimensions.h20,
-                        )),
-                    onTap: () {},
                     textColor: Colors.white,
                   ),
                   ListTile(
@@ -134,7 +124,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         style: TextStyle(
                           fontSize: Dimensions.h20,
                         )),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed('contactUs');
+                    },
                     textColor: Colors.white,
                   ),
                   ListTile(
@@ -144,7 +136,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         style: TextStyle(
                           fontSize: Dimensions.h20,
                         )),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed('aboutUs');
+                    },
                     textColor: Colors.white,
                   ),
                   ListTile(

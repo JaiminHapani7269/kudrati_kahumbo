@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
-import 'package:kudrati_kahumbo/widgets/cart_tile.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/cart_provider.dart';

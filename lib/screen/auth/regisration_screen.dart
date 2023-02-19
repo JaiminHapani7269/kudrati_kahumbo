@@ -146,6 +146,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       child: ElevatedButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
+                            Navigator.pushReplacementNamed(context, "otp");
                             await FirebaseAuth.instance.verifyPhoneNumber(
                               phoneNumber: "${countryCode.text + mobile.text}",
                               verificationCompleted:
@@ -155,7 +156,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               },
                               codeSent: (String verificationId,
                                   int? resendToken) async {
-                                Navigator.pushReplacementNamed(context, "otp");
+                                
                                 Fluttertoast.showToast(msg: "OTP Sent :)");
                                 RegistrationScreen.verify = verificationId;
                                 RegistrationScreen.username = userName.text;

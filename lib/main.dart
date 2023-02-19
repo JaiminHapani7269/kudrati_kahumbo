@@ -5,8 +5,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:kudrati_kahumbo/firebase_options.dart';
 import 'package:kudrati_kahumbo/provider/cart_provider.dart';
 import 'package:kudrati_kahumbo/provider/wishlist_provider.dart';
+import 'package:kudrati_kahumbo/screen/about_us_page.dart';
 import 'package:kudrati_kahumbo/screen/auth/regisration_screen.dart';
 import 'package:kudrati_kahumbo/screen/auth/otp_screen.dart';
+import 'package:kudrati_kahumbo/screen/city_branch.dart';
+import 'package:kudrati_kahumbo/screen/contact_us_page.dart';
+import 'package:kudrati_kahumbo/screen/feedback_page.dart';
 import 'package:kudrati_kahumbo/screen/home_page.dart';
 import 'package:kudrati_kahumbo/screen/my_order_page.dart';
 import 'package:kudrati_kahumbo/screen/order_done_page.dart';
@@ -20,6 +24,7 @@ import 'package:provider/provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
+    //ab.txt
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
@@ -51,9 +56,12 @@ class MyApp extends StatelessWidget {
           'otp': (context) => const OTPScreen(),
           'cart': (context) => const CartPage(),
           'wishlist': (context) => const WishListPage(),
+          'aboutUs': (context) => const AboutUsPage(),
+          'contactUs': (context) => const ContactUsPage(),
           'payment': (context) => const PaymentPage(),
           'orderDone': (context) => const OrderDonePage(),
           'myOrder': (context) => const MyOrderPage(),
+          'feedback': (context) => const FeedbackPage(),
         },
       ),
     );
