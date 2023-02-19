@@ -369,7 +369,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                             if (_formKey.currentState!.validate()) {
                               FirebaseFirestore.instance
                                   .collection("feedback")
-                                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                                  .doc()
                                   .set({
                                 'cname': c_name,
                                 'msg': feedbackController.text,
