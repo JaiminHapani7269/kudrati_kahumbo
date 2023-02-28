@@ -89,6 +89,7 @@ class _OrderDonePageState extends State<OrderDonePage> {
                 children: [
                   Text(
                     'Send Feedback:',
+                    // ignore: deprecated_member_use
                     style: Theme.of(context).textTheme.headline6,
                   ),
                   Form(

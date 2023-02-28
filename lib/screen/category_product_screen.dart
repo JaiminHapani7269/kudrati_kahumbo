@@ -38,7 +38,10 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
         ),
         leading: IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back_ios)),
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: Dimensions.h30,
+            )),
         actions: [
           IconButton(
               onPressed: () {
@@ -47,7 +50,10 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                   MaterialPageRoute(builder: (context) => const SearchPage()),
                 );
               },
-              icon: const Icon(Icons.search_outlined)),
+              icon: Icon(
+                Icons.search_outlined,
+                size: Dimensions.h30,
+              )),
           StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection("wishlist")

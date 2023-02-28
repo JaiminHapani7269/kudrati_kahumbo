@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:kudrati_kahumbo/utils/app_colors.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
 
@@ -44,7 +42,7 @@ class AboutUsPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
+                    const Expanded(
                       child: Image(
                         image: NetworkImage(
                             'https://www.kudratikahumbo.com/wp-content/uploads/2022/01/Chirag.png'),
@@ -105,7 +103,7 @@ class AboutUsPage extends StatelessWidget {
                             ),
                           ],
                         )),
-                    Expanded(
+                    const Expanded(
                       child: Image(
                         image: NetworkImage(
                             'https://www.kudratikahumbo.com/wp-content/uploads/2022/01/rushik.png'),
@@ -126,7 +124,7 @@ class AboutUsPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Expanded(
+                    const Expanded(
                       child: Image(
                         image: NetworkImage(
                             'https://www.kudratikahumbo.com/wp-content/uploads/2022/01/hiren.png'),
@@ -187,7 +185,7 @@ class AboutUsPage extends StatelessWidget {
                             ),
                           ],
                         )),
-                    Expanded(
+                    const Expanded(
                       child: Image(
                         image: NetworkImage(
                             'https://www.kudratikahumbo.com/wp-content/uploads/2022/01/jaydip.png'),

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
 
 import '../utils/app_colors.dart';
@@ -58,7 +56,7 @@ class ContactUsPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.phone,
                         color: AppColors.mainPurple,
                       ),
