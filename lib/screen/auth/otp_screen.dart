@@ -186,6 +186,5 @@ class _OTPScreenState extends State<OTPScreen> {
         .collection("customer")
         .doc(user!.uid)
         .set(userModel.toMap());
-    Fluttertoast.showToast(msg: "Account created succefuly :)");
   }
 }

@@ -192,6 +192,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   Future<void> signInWithPhone() async {
     if (_formKey.currentState!.validate()) {
+      Navigator.pushReplacementNamed(context, "otp");
       await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: "${countryCode.text + mobile.text}",
         verificationCompleted: (PhoneAuthCredential credential) {},
@@ -199,7 +200,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           Fluttertoast.showToast(msg: "Auth Failed!");
         },
         codeSent: (String verificationId, int? resendToken) async {
-          Navigator.pushReplacementNamed(context, "otp");
           Fluttertoast.showToast(msg: "OTP Sent :)");
           RegistrationScreen.verify = verificationId;
           RegistrationScreen.username = userName.text;

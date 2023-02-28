@@ -11,7 +11,7 @@ import 'package:kudrati_kahumbo/utils/app_colors.dart';
 import 'package:kudrati_kahumbo/utils/dimensions.dart';
 import 'package:kudrati_kahumbo/widgets/drawer.dart';
 import 'package:kudrati_kahumbo/widgets/single_popular.dart';
-
+import 'package:velocity_x/velocity_x.dart';
 import '../model/user_model.dart';
 
 class HomePage extends StatefulWidget {
@@ -64,16 +64,54 @@ class _HomePageState extends State<HomePage> {
                 );
               },
               icon: const Icon(Icons.search_outlined)),
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed('wishlist');
-              },
-              icon: const Icon(Icons.favorite_outline)),
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed('cart');
-              },
-              icon: const Icon(CupertinoIcons.shopping_cart)),
+          StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection("wishlist")
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection("userWishlist")
+                .snapshots(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              return IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('wishlist');
+                },
+                icon: Icon(
+                  Icons.favorite_outline,
+                  size: Dimensions.h30,
+                ).badge(
+                  color: Vx.gray300,
+                  size: Dimensions.h15,
+                  count: snapshot.data!.docs.length,
+                  textStyle: const TextStyle(
+                      color: AppColors.mainPurple, fontWeight: FontWeight.bold),
+                ),
+              );
+            },
+          ),
+          StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection("cart")
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection("userCart")
+                .snapshots(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              return IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('cart');
+                },
+                icon: Icon(
+                  CupertinoIcons.shopping_cart,
+                  size: Dimensions.h30,
+                ).badge(
+                  color: Vx.gray300,
+                  size: Dimensions.h15,
+                  count: snapshot.data!.docs.length,
+                  textStyle: const TextStyle(
+                      color: AppColors.mainPurple, fontWeight: FontWeight.bold),
+                ),
+              );
+            },
+          ),
         ],
       ),
       drawer: CustomDrawer(

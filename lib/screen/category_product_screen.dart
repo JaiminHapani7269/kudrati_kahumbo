@@ -1,10 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:kudrati_kahumbo/screen/search_page.dart';
 import 'package:kudrati_kahumbo/widgets/single_product.dart';
+import 'package:velocity_x/velocity_x.dart';
 import '../utils/app_colors.dart';
 import '../utils/dimensions.dart';
 
@@ -46,14 +48,54 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                 );
               },
               icon: const Icon(Icons.search_outlined)),
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed('wishlist');
-              },
-              icon: const Icon(Icons.favorite_outline)),
-          IconButton(
-              onPressed: () => Navigator.of(context).pushNamed('cart'),
-              icon: const Icon(CupertinoIcons.shopping_cart)),
+          StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection("wishlist")
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection("userWishlist")
+                .snapshots(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              return IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('wishlist');
+                },
+                icon: Icon(
+                  Icons.favorite_outline,
+                  size: Dimensions.h30,
+                ).badge(
+                  color: Vx.gray300,
+                  size: Dimensions.h15,
+                  count: snapshot.data!.docs.length,
+                  textStyle: const TextStyle(
+                      color: AppColors.mainPurple, fontWeight: FontWeight.bold),
+                ),
+              );
+            },
+          ),
+          StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection("cart")
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection("userCart")
+                .snapshots(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              return IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('cart');
+                },
+                icon: Icon(
+                  CupertinoIcons.shopping_cart,
+                  size: Dimensions.h30,
+                ).badge(
+                  color: Vx.gray300,
+                  size: Dimensions.h15,
+                  count: snapshot.data!.docs.length,
+                  textStyle: const TextStyle(
+                      color: AppColors.mainPurple, fontWeight: FontWeight.bold),
+                ),
+              );
+            },
+          ),
         ],
       ),
       body: Padding(
