@@ -96,3 +96,52 @@ FirebaseFirestore.instance
                         'date': DateTime.now(),
                         'orderStatus': 'placed',
                       });
+
+StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection("wishlist")
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection("userWishlist")
+                .snapshots(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              return IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('wishlist');
+                },
+                icon: Icon(
+                  Icons.favorite_outline,
+                  size: Dimensions.h30,
+                ).badge(
+                  color: Vx.gray300,
+                  size: Dimensions.h15,
+                  count: snapshot.data!.docs.length,
+                  textStyle: const TextStyle(
+                      color: AppColors.mainPurple, fontWeight: FontWeight.bold),
+                ),
+              );
+            },
+          ),
+          StreamBuilder(
+            stream: FirebaseFirestore.instance
+                .collection("cart")
+                .doc(FirebaseAuth.instance.currentUser!.uid)
+                .collection("userCart")
+                .snapshots(),
+            builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              return IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('cart');
+                },
+                icon: Icon(
+                  CupertinoIcons.shopping_cart,
+                  size: Dimensions.h30,
+                ).badge(
+                  color: Vx.gray300,
+                  size: Dimensions.h15,
+                  count: snapshot.data!.docs.length,
+                  textStyle: const TextStyle(
+                      color: AppColors.mainPurple, fontWeight: FontWeight.bold),
+                ),
+              );
+            },
+          ),

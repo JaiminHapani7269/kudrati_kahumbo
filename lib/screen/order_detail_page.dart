@@ -94,11 +94,16 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            const Text("Order Id: "),
+                            Text(
+                              "Order Id:  ",
+                              style: TextStyle(
+                                  color: AppColors.mainPurple,
+                                  fontSize: Dimensions.h20),
+                            ),
                             Text(
                               widget.oid,
                               style: TextStyle(
-                                  color: AppColors.mainPurple,
+                                  color: Colors.green,
                                   fontSize: Dimensions.h20),
                             ),
                           ],
@@ -107,11 +112,16 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            const Text("Order Date: "),
+                            Text(
+                              "Order Date: ",
+                              style: TextStyle(
+                                  color: AppColors.mainPurple,
+                                  fontSize: Dimensions.h20),
+                            ),
                             Text(
                               widget.date,
                               style: TextStyle(
-                                  color: AppColors.mainPurple,
+                                  color: Colors.black,
                                   fontSize: Dimensions.h15),
                             ),
                           ],
@@ -132,11 +142,12 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
               SizedBox(height: Dimensions.h15),
               Divider(
                 height: Dimensions.h12,
+                thickness: 1,
                 color: AppColors.mainPurple,
               ),
               Container(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       'Customer Information:',
@@ -151,13 +162,14 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                       children: [
                         Text(
                           "Name: ",
-                          style: TextStyle(fontSize: Dimensions.h15),
+                          style: TextStyle(
+                              color: AppColors.mainPurple,
+                              fontSize: Dimensions.h18),
                         ),
                         Text(
                           widget.name,
                           style: TextStyle(
-                              color: AppColors.mainPurple,
-                              fontSize: Dimensions.h24),
+                              color: Colors.green, fontSize: Dimensions.h18),
                         ),
                       ],
                     ),
@@ -167,13 +179,14 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                       children: [
                         Text(
                           "Mobile No: ",
-                          style: TextStyle(fontSize: Dimensions.h15),
+                          style: TextStyle(
+                              color: AppColors.mainPurple,
+                              fontSize: Dimensions.h18),
                         ),
                         Text(
                           widget.phone,
                           style: TextStyle(
-                              color: AppColors.mainPurple,
-                              fontSize: Dimensions.h20),
+                              color: Colors.green, fontSize: Dimensions.h18),
                         ),
                       ],
                     ),
@@ -181,16 +194,22 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                 ),
               ),
               SizedBox(height: Dimensions.h20),
+              Divider(
+                height: Dimensions.h12,
+                thickness: 1,
+                color: AppColors.mainPurple,
+              ),
               Container(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       'Product Information:',
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     Divider(
-                      height: Dimensions.h20,
+                      height: Dimensions.h12,
+                      thickness: 1,
                       color: AppColors.mainPurple,
                     ),
                     Text(
@@ -203,29 +222,61 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                 ),
               ),
               SizedBox(height: Dimensions.h20),
+              Divider(
+                height: Dimensions.h12,
+                thickness: 1,
+                color: AppColors.mainPurple,
+              ),
               SizedBox(
                 height: Dimensions.h120,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       'Delivery Information:',
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     Divider(
-                      height: Dimensions.h24,
+                      height: Dimensions.h12,
+                      thickness: 1,
                       color: AppColors.mainPurple,
                     ),
-                    Text(
-                      "Deliver To: ",
-                      style: TextStyle(fontSize: Dimensions.h15),
-                    ),
-                    SizedBox(height: Dimensions.h5),
-                    Text(
-                      "${widget.hno},${widget.address},${widget.area},${widget.city},${widget.state},${widget.pincode}",
-                      style: TextStyle(
-                          color: AppColors.mainPurple,
-                          fontSize: Dimensions.h18),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Deliver To: ",
+                          style: TextStyle(
+                              color: AppColors.mainPurple,
+                              fontSize: Dimensions.h18),
+                        ),
+                        SizedBox(width: Dimensions.h10),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${widget.hno},${widget.address},${widget.area},",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: Dimensions.h18),
+                            ),
+                            Text(
+                              "${widget.area},${widget.city},",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: Dimensions.h18),
+                            ),
+                            Text(
+                              "${widget.state},${widget.pincode}",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: Dimensions.h18),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -258,7 +309,9 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                   backgroundColor: Colors.red,
                 ),
                 onPressed: () {
-                  if (widget.orderstatus == 'placed') {
+                  if (widget.orderstatus == 'placed' ||
+                      widget.orderstatus == 'Placed' ||
+                      widget.orderstatus == 'PLACED') {
                     showDialog(
                         barrierDismissible: false,
                         context: context,

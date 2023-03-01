@@ -41,7 +41,7 @@ class FeedbackPage extends StatelessWidget {
                   padding: EdgeInsets.all(Dimensions.h10),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 233, 197, 215),
+                      color: const Color(0xFFECE6E9),
                       borderRadius: BorderRadius.circular(Dimensions.r12),
                     ),
                     child: ListTile(

@@ -71,7 +71,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                 ).badge(
                   color: Vx.gray300,
                   size: Dimensions.h15,
-                  count: snapshot.data!.docs.length,
+                  count: snapshot.data?.docs.length,
                   textStyle: const TextStyle(
                       color: AppColors.mainPurple, fontWeight: FontWeight.bold),
                 ),
@@ -95,7 +95,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                 ).badge(
                   color: Vx.gray300,
                   size: Dimensions.h15,
-                  count: snapshot.data!.docs.length,
+                  count: snapshot.data?.docs.length,
                   textStyle: const TextStyle(
                       color: AppColors.mainPurple, fontWeight: FontWeight.bold),
                 ),
