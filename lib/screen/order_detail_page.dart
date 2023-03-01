@@ -257,7 +257,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "${widget.hno},${widget.address},${widget.area},",
+                              "${widget.hno},${widget.address},",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: Dimensions.h18),
