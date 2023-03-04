@@ -113,7 +113,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              "Order Date: ",
+                              "Date: ",
                               style: TextStyle(
                                   color: AppColors.mainPurple,
                                   fontSize: Dimensions.h20),

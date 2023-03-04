@@ -18,7 +18,10 @@ class PaymentPage extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: Image.asset('assets/images/qr.jpeg'),
+        child: Image.asset(
+          'assets/images/qr_code.jpeg',
+          fit: BoxFit.contain,
+        ),
       ),
       bottomNavigationBar: Container(
         height: 90,
