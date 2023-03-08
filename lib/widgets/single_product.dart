@@ -96,7 +96,7 @@ class _SingleProductTileState extends State<SingleProductTile> {
                         icon: widget.isInFavorite
                             ? const Icon(
                                 Icons.favorite,
-                                color: Colors.red,
+                                color: AppColors.mainPurple,
                               )
                             : const Icon(
                                 Icons.favorite_border_outlined,

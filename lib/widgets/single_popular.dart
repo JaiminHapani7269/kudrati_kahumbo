@@ -44,7 +44,7 @@ class _SinglePopularTileState extends State<SinglePopularTile> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Dimensions.r12),
                 image: DecorationImage(
-                  fit: BoxFit.contain,
+                  fit: BoxFit.cover,
                   image: NetworkImage(widget.image),
                 )),
           ),
@@ -108,7 +108,7 @@ class _SinglePopularTileState extends State<SinglePopularTile> {
                         icon: widget.isInFavorite
                             ? const Icon(
                                 Icons.favorite,
-                                color: Colors.red,
+                                color: AppColors.mainPurple,
                               )
                             : const Icon(
                                 Icons.favorite_border_outlined,
