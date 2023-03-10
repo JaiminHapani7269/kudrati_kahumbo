@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+
     FirebaseFirestore.instance
         .collection("customer")
         .doc(user?.uid)
@@ -41,6 +42,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  ScrollController _firstController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -184,7 +186,7 @@ class _HomePageState extends State<HomePage> {
             ),
             SizedBox(height: Dimensions.h10),
             SizedBox(
-              height: Dimensions.h100,
+              height: Dimensions.h120,
               child: StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection("category")
@@ -198,23 +200,36 @@ class _HomePageState extends State<HomePage> {
                         color: AppColors.mainPurple,
                       ));
                     }
-                    return ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: streamSnapshot.data!.docs.length,
-                        itemBuilder: (context, index) {
-                          var data = streamSnapshot.data!.docs[index];
-                          return Category(
-                              onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => CategoryProductScreen(
-                                        id: streamSnapshot.data!.docs[index].id,
-                                        collection: data["cname"])));
-                              },
-                              icon: data["icon"],
-                              cname: data["cname"]);
-                        });
+                    return Scrollbar(
+                      radius: Radius.circular(20),
+                      thumbVisibility: true,
+                      controller: _firstController,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: streamSnapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            var data = streamSnapshot.data!.docs[index];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Category(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CategoryProductScreen(
+                                                    id:
+                                                        streamSnapshot.data!
+                                                            .docs[index].id,
+                                                    collection:
+                                                        data["cname"])));
+                                  },
+                                  icon: data["icon"],
+                                  cname: data["cname"]),
+                            );
+                          }),
+                    );
                   }),
             ),
             SizedBox(height: Dimensions.h10),
